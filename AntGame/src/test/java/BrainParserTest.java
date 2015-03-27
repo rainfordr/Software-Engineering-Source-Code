@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import group20.antgame.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,25 +20,23 @@ import group20.antgame.*;
 public class BrainParserTest {
     
     BrainParser bp = new BrainParser();
+    ArrayList <String> testInstructions = new ArrayList<>();
     //create new any brain string here to test on
     
     public BrainParserTest() {
+        testInstructions.add("Sense Ahead 1 3 Food");
+        testInstructions.add("Move 2 0");
+        testInstructions.add("pickUp 8 0");
+        testInstructions.add("Flip 3 4 5");
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+    /**
+     *
+     * @throws BrainParser.InvalidBrainSyntaxException
+     */
+    @Test
+    public void TestParse() throws Exception{
+        bp.parseBrain(testInstructions.toString());
     }
 
     // TODO add test methods here.
