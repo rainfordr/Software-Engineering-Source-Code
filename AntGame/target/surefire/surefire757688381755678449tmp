@@ -1,0 +1,22 @@
+#surefire
+#Fri Mar 20 00:12:05 GMT 2015
+testClassesDirectory=C\:\\Users\\owner\\Google Drive\\Software Engineering Requirements Document\\Project files\\AntGame\\target\\test-classes
+forkMode=once
+classPathUrl.3=C\:\\Users\\owner\\.m2\\repository\\org\\hamcrest\\hamcrest-core\\1.1\\hamcrest-core-1.1.jar
+classPathUrl.2=C\:\\Users\\owner\\.m2\\repository\\junit\\junit\\4.10\\junit-4.10.jar
+useManifestOnlyJar=true
+classPathUrl.1=C\:\\Users\\owner\\Google Drive\\Software Engineering Requirements Document\\Project files\\AntGame\\target\\classes
+classPathUrl.0=C\:\\Users\\owner\\Google Drive\\Software Engineering Requirements Document\\Project files\\AntGame\\target\\test-classes
+reportsDirectory=C\:\\Users\\owner\\Google Drive\\Software Engineering Requirements Document\\Project files\\AntGame\\target\\surefire-reports
+providerConfiguration=org.apache.maven.surefire.junit4.JUnit4Provider
+testSuiteDefinitionTestSourceDirectory=C\:\\Users\\owner\\Google Drive\\Software Engineering Requirements Document\\Project files\\AntGame\\src\\test\\java
+requestedTest=group20.antgame.AntIT
+surefireClassPathUrl.1=C\:\\Users\\owner\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-api\\2.10\\surefire-api-2.10.jar
+surefireClassPathUrl.0=C\:\\Users\\owner\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-junit4\\2.10\\surefire-junit4-2.10.jar
+runOrder=filesystem
+useSystemClassLoader=true
+isTrimStackTrace=true
+enableAssertions=true
+failIfNoTests=true
+includes0=**/group20/antgame/AntIT.java
+childDelegation=false
