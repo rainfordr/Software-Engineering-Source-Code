@@ -19,7 +19,7 @@ public class BrainParser {
     public static enum instructionType {
 
         Move("Move ([0-9]*) ([0-9]*)"),
-        PickUp("PickUp ([0-9]*) ([0-9]*)"),
+        PickUp("pickUp ([0-9]*) ([0-9]*)"),
         Drop("Drop ([0-9]*)"),
         Turn("Turn (Left|Right) ([0-9]*)"),
         Flip("Flip ([0-9]*) ([0-9]*) ([0-9]*)"),
@@ -55,16 +55,73 @@ public class BrainParser {
         
         Matcher m = tokenPatterns.matcher(brain);
         
+        
         while(m.find()){
             if (m.group(instructionType.Move.name())!= null){
                 String contents = m.group();
                 String regex = instructionType.Move.pattern;
-                Pattern p = Pattern.compile(regex);
-                System.out.println(contents);
-                String s = p.matcher(contents).group();
-                System.out.println(s);
                 
+                Matcher m2 = Pattern.compile(regex).matcher(contents);
                 
+                while (m2.find()){
+                    String s = m2.group(1);
+                    String s2 = m2.group(2);
+                    int st1 = Integer.parseInt(s);
+                    int st2 = Integer.parseInt(s2);
+                    instructions.add(new Move(st1, st2));
+                            
+                }   
+                
+            }else if (m.group(instructionType.PickUp.name())!=null){
+                String contents = m.group();
+                String regex = instructionType.PickUp.pattern;
+                
+                Matcher m2 = Pattern.compile(regex).matcher(contents);
+                
+                while (m2.find()){
+                    String s = m2.group(1);
+                    String s2 = m2.group(2);
+                    int st1 = Integer.parseInt(s);
+                    int st2 = Integer.parseInt(s2);
+                    instructions.add(new PickUp(st1, st2));
+                            
+                }
+            }else if(m.group(instructionType.Drop.name())!=null){
+                
+                String contents = m.group();
+                String regex = instructionType.PickUp.pattern;
+                
+                Matcher m2 = Pattern.compile(regex).matcher(contents);
+                
+                while (m2.find()){
+                    String s = m2.group(1);
+                    int st1 = Integer.parseInt(s);
+                    instructions.add(new Drop(st1));        
+                }
+            }else if(m.group(instructionType.Turn.name())!=null){
+                
+                String contents = m.group();
+                String regex = instructionType.PickUp.pattern;
+                
+                Matcher m2 = Pattern.compile(regex).matcher(contents);
+                
+                while (m2.find()){
+                    String s = m2.group(1);
+                    String s2 = m2.group(2);
+                    int st1 = Integer.parseInt(s);
+                    int st2 = Integer.parseInt(s2);
+                    instructions.add(new PickUp(st1, st2));
+                    
+                    switch (m2.group(1)){
+                        case "Left":
+                            instructions.add(new Turn(Turn.LeftOrRight.LEFT, st2));
+                            break;
+                        case = "Right":
+                            instructions.add(new Turn(Turn.LeftOrRight.RIGHT, st2));
+                        
+                    }
+                            
+                }
                 
             }
         }
