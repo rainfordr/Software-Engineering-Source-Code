@@ -116,7 +116,7 @@ public class BrainParser {
                         case "Left":
                             instructions.add(new Turn(Turn.LeftOrRight.LEFT, st2));
                             break;
-                        case = "Right":
+                        case  "Right":
                             instructions.add(new Turn(Turn.LeftOrRight.RIGHT, st2));
                         
                     }
