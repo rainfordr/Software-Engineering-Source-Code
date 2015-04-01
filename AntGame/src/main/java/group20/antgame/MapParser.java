@@ -26,7 +26,7 @@ public class MapParser {
         int fileRows = mapFile.length;
         if(fileRows < 3){
             throw new InvalidMapSyntaxException("Invalid File Syntax. Requires two rows of ints followed by Map representation");
-        }        
+        }
         char[][] map; // = new MapCell[150][150];
         int x = 0;
         int y = 0;
@@ -36,7 +36,7 @@ public class MapParser {
         }
         else{
             Xsize = mapFile[0];
-            if(!isPosInt(Xsize)){
+            if(!dimensionOK(Xsize)||!isPosInt(Xsize)){
                 throw new InvalidMapSyntaxException("First row of map should be int X size of map");
             }
             x = Integer.parseInt(Xsize);
@@ -47,7 +47,7 @@ public class MapParser {
         }
         else{
             Ysize = mapFile[1];
-            if(!isPosInt(Ysize)){
+            if(!dimensionOK(Ysize)||!isPosInt(Ysize)){
                 throw new InvalidMapSyntaxException("Second row of map should be int Y size of map");
             }
             y = Integer.parseInt(Ysize);
@@ -59,7 +59,7 @@ public class MapParser {
         if(fileRows - 2 < y){
             throw new InvalidMapSyntaxException("Stated and actual Y values differ. Stated is " + y +", actual is " +(fileRows - 2)+ ".");
         }
-        if(!oddEdgeOK(mapFile[2], y)){
+        if(!edgeOK(mapFile[2], y)){
             throw new InvalidMapSyntaxException("The edges of the map should all be rock(# char)");
         }
         else{
@@ -76,20 +76,20 @@ public class MapParser {
         return null;
     }
     
-    public boolean oddEdgeOK(String row, int rowSize){
-        return row.matches("( ?# ){" +(rowSize-1)+ "}#" );
+    public boolean dimensionOK(String row){
+        return row.matches("(\\d+)(\\s*)");
     }
     
-    public boolean evenEdgeOK(String row, int rowSize){
-        return row.matches("( ?#){" + (rowSize) + "}");
+    public boolean edgeOK(String row, int rowSize){
+        return row.matches("( ?# )(# ){" + (rowSize -2) + "}(# *)");
     }
     
-    public boolean EvenBodyRowOK(String row, int rowSize){
-        return row.matches("( ?#)(#|+|-|[1-9]|.){" + (rowSize-2) + "}#");
+    public boolean bodyRowOK(String row, int rowSize){
+        return row.matches("( ?)# ((# )|(\\+ )|(\\- )|([1-9] )|(. )){" + (rowSize-2) + "}# *");
     }
     
     //Method to check if given String is an integer.
-    boolean isPosInt(String row){
+    public boolean isPosInt(String row){
         row = row.replace(" ", "");
         int result;
         try{
