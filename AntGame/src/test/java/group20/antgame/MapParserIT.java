@@ -72,7 +72,77 @@ public class MapParserIT {
         int rowSize = 10;
         MapParser instance = new MapParser();
         boolean expResult = true;
-        boolean result = instance.oddEdgeOK(row, rowSize);
+        boolean result = instance.edgeOK(row, rowSize);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of topRowOK method, of class MapParser.
+     */
+    @Test
+    public void testBodyRowOKPassesWithValidInput() {
+        System.out.println("bodyRowOK");
+        String row = "# . . + . 9 - # . #";
+        int rowSize = 10;
+        MapParser instance = new MapParser();
+        boolean expResult = true;
+        boolean result = instance.bodyRowOK(row, rowSize);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of topRowOK method, of class MapParser.
+     */
+    @Test
+    public void testBodyRowOKPassesWithValidInputTrailingSpaces() {
+        System.out.println("bodyRowOK");
+        String row = "# . . + . 9 - # . #     ";
+        int rowSize = 10;
+        MapParser instance = new MapParser();
+        boolean expResult = true;
+        boolean result = instance.bodyRowOK(row, rowSize);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of topRowOK method, of class MapParser.
+     */
+    @Test
+    public void testBodyRowOKFailsWithInvalidInput() {
+        System.out.println("bodyRowOK");
+        String row = "# . . + . 9 - # . .";
+        int rowSize = 10;
+        MapParser instance = new MapParser();
+        boolean expResult = false;
+        boolean result = instance.bodyRowOK(row, rowSize);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of topRowOK method, of class MapParser.
+     */
+    @Test
+    public void testBodyRowOKFailsWithInvalidInput2() {
+        System.out.println("bodyRowOK");
+        String row = "# . . + .9 - # . #";
+        int rowSize = 10;
+        MapParser instance = new MapParser();
+        boolean expResult = false;
+        boolean result = instance.bodyRowOK(row, rowSize);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of topRowOK method, of class MapParser.
+     */
+    @Test
+    public void testBodyRowOKFailsWithInvalidInput3() {
+        System.out.println("bodyRowOK");
+        String row = "# . . + . 9 - # . # #";
+        int rowSize = 10;
+        MapParser instance = new MapParser();
+        boolean expResult = false;
+        boolean result = instance.bodyRowOK(row, rowSize);
         assertEquals(expResult, result);
     }
 
@@ -122,7 +192,7 @@ public class MapParserIT {
         System.out.println("isPosInt");
         String currentChar = "150    ";
         MapParser instance = new MapParser();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.isPosInt(currentChar);
         assertEquals(expResult, result);
     }
@@ -136,6 +206,70 @@ public class MapParserIT {
         MapParser instance = new MapParser();
         boolean expResult = false;
         boolean result = instance.isPosInt(currentChar);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of dimensionOK method, of class MapParser.
+     */
+    @Test
+    public void dimensionOKPassesWithValidInput() {
+        System.out.println("isPosInt");
+        String row = "150";
+        MapParser instance = new MapParser();
+        boolean expResult = true;
+        boolean result = instance.dimensionOK(row);
+        assertEquals(expResult, result);
+    }
+    /**
+     * Test of dimensionOK method, of class MapParser.
+     */
+    @Test
+    public void dimensionOKPassesWithValidInput2() {
+        System.out.println("isPosInt");
+        String row = "150       ";
+        MapParser instance = new MapParser();
+        boolean expResult = true;
+        boolean result = instance.dimensionOK(row);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of dimensionOK method, of class MapParser.
+     */
+    @Test
+    public void dimensionOKfailsWithinValidInput() {
+        System.out.println("isPosInt");
+        String row = "150X";
+        MapParser instance = new MapParser();
+        boolean expResult = false;
+        boolean result = instance.dimensionOK(row);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of dimensionOK method, of class MapParser.
+     */
+    @Test
+    public void dimensionOKfailsWithinValidInput2() {
+        System.out.println("isPosInt");
+        String row = "150       x";
+        MapParser instance = new MapParser();
+        boolean expResult = false;
+        boolean result = instance.dimensionOK(row);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of dimensionOK method, of class MapParser.
+     */
+    @Test
+    public void dimensionOKfailsWithinValidInput3() {
+        System.out.println("isPosInt");
+        String row = " 150";
+        MapParser instance = new MapParser();
+        boolean expResult = false;
+        boolean result = instance.dimensionOK(row);
         assertEquals(expResult, result);
     }
     
