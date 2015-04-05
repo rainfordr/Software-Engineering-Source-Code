@@ -11,6 +11,8 @@ import group20.exceptions.InvalidWorldException;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -32,7 +34,25 @@ public class MapGui extends JFrame {
     ImageIcon blackIcon;
     ImageIcon foodIcon;
     JPanel mapPanel = new JPanel();
+    JMenuBar menuBar = new JMenuBar();
+    JMenu gameMenu = new JMenu("Game");
+    JMenuItem setAntBrains = new JMenuItem("Set Ant Brains");
+    JMenuItem selectWorld = new JMenuItem("Select World");
+    JMenuItem resetButton = new JMenuItem("Reset");
+    JMenuItem exitButton = new JMenuItem("Exit");
     Map worldMap;
+    JFrame gameOptionsFrame = new JFrame("Set Game Options..");
+    JPanel optionsPanel = new JPanel();
+    JLabel selectBrain1 = new JLabel("Select Brain 1:");
+    JLabel selectBrain2 = new JLabel("Select Brain 2:");
+    JButton selectBrain1Button = new JButton("Browse...");
+    JButton selectBrain2Button = new JButton("Browse...");
+    JButton okButton = new JButton("OK");
+    JButton cancelButton = new JButton("Cancel");
+    MapMouseListener listener = new MapMouseListener();
+    JFileChooser chooseBrain1 = new JFileChooser();
+    JFileChooser chooseBrain2 = new JFileChooser();
+    JFileChooser chooseWorld = new JFileChooser();
 
     public void loadImages() {
         try {
@@ -52,6 +72,29 @@ public class MapGui extends JFrame {
 
     public MapGui(Map worldMap) {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        gameMenu.add(setAntBrains);
+        setAntBrains.addMouseListener(listener);
+        gameMenu.add(selectWorld);
+        selectWorld.addMouseListener(listener);
+        gameMenu.add(resetButton);
+        resetButton.addMouseListener(listener);
+        gameMenu.add(exitButton);
+        exitButton.addMouseListener(listener);
+        menuBar.add(gameMenu);
+        this.setJMenuBar(menuBar);
+        optionsPanel.setLayout(new GridLayout(0,2));
+        optionsPanel.add(selectBrain1);
+        optionsPanel.add(selectBrain1Button);
+        selectBrain1Button.addMouseListener(listener);
+        optionsPanel.add(selectBrain2);
+        optionsPanel.add(selectBrain2Button);
+        selectBrain2Button.addMouseListener(listener);
+        optionsPanel.add(cancelButton);
+        cancelButton.addMouseListener(listener);
+        optionsPanel.add(okButton);
+        okButton.addMouseListener(listener);
+        gameOptionsFrame.add(optionsPanel);
+        gameOptionsFrame.pack();
         this.worldMap = worldMap;
     }
 
@@ -105,4 +148,52 @@ public class MapGui extends JFrame {
         m.loadImages();
         m.drawMap();
     }
+
+    class MapMouseListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.getSource() == exitButton) {
+                System.exit(0);
+            }
+            if (e.getSource() == resetButton) {
+                
+            }
+            if (e.getSource() == cancelButton) {
+                gameOptionsFrame.setVisible(false);                
+            }
+            if (e.getSource() == setAntBrains) {
+                gameOptionsFrame.setVisible(true);
+            }
+            if (e.getSource() == selectBrain1Button) {
+                chooseBrain1.showOpenDialog(gameMenu);
+            }
+            if (e.getSource() == selectBrain2Button) {
+                chooseBrain2.showOpenDialog(gameMenu);
+            }
+            if (e.getSource() == selectWorld) {
+                chooseWorld.showOpenDialog(gameMenu);
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
+
 }
