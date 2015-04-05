@@ -1,0 +1,12 @@
+#surefire
+#Sun Apr 05 13:21:07 BST 2015
+jpda.address=63466
+maven.ext.class.path=C\:\\Users\\owner\\AppData\\Roaming\\NetBeans\\8.0.1\\maven-nblib\\netbeans-eventspy.jar
+file.encoding=UTF-8
+jpda.listen=true
+forkMode=once
+user.dir=C\:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame
+localRepository=C\:\\Users\\owner\\.m2\\repository
+test=group20.antgame.MapCellIT
+basedir=C\:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame
+maven.surefire.debug=-Xdebug -Xrunjdwp\:transport\=dt_socket,server\=n,address\=63466
