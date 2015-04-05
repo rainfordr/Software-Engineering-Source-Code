@@ -21,8 +21,7 @@ public class MapCell {
                     //black markers
                     bMarker0 = false, bMarker1 = false, bMarker2 = false, 
                     bMarker3 = false, bMarker4 = false, bMarker5 = false;
-    private boolean isRedAntHill;
-    private boolean isBlackAntHill;
+    private final Colour hillColour;
     
     
 
@@ -31,29 +30,21 @@ public class MapCell {
      * Pos coordinates and sets whether or not it is rocky.
      *
      * @param pos This is the x and y coordinate of the cell.
+     * @param rocky whether this cell is rock
+     * @param foodAmount
+     * @param hillColour the colour of this hillCell, null if not a hill cell.
      */
-    public MapCell(Pos pos, boolean rocky, int foodAmount, boolean isRedAntHill, boolean isBlackAntHill) {
+    public MapCell(Pos pos, boolean rocky,int foodAmount, Colour hillColour) {
+        this.hillColour = hillColour;
         this.pos = pos;
         this.rocky = rocky;
         this.foodAmount = foodAmount;
-        this.isRedAntHill = isRedAntHill;
-        this.isBlackAntHill = isBlackAntHill;
     }
     
     public void setRocky(boolean rocky){
         this.rocky = rocky;
     }
     
-    public void setAntHillCell(Colour c){
-        switch(c){
-            case BLACK:
-                isBlackAntHill = true;
-                break;
-            case RED:
-                isRedAntHill = true;
-                break;
-        }
-    }
 
     /**
      * This method tells if the cell is a block or a space.
@@ -253,13 +244,7 @@ public class MapCell {
     }   
 
     public boolean isAntHillCell(Colour c) {
-        switch(c){
-            case RED:
-                return isRedAntHill;
-            case BLACK:
-                return isBlackAntHill;
-        }
-        return false;
+        return hillColour == c;
     }
     
     
