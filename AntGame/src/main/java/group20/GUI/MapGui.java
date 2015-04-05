@@ -34,10 +34,8 @@ public class MapGui extends JFrame {
     ImageIcon blackIcon;
     ImageIcon foodIcon;
     JPanel mapPanel = new JPanel();
-<<<<<<< HEAD
     Map mapClass;
     MapCell[][] worldMap;
-=======
     JMenuBar menuBar = new JMenuBar();
     JMenu gameMenu = new JMenu("Game");
     JMenuItem setAntBrains = new JMenuItem("Set Ant Brains");
@@ -57,7 +55,7 @@ public class MapGui extends JFrame {
     JFileChooser chooseBrain1 = new JFileChooser();
     JFileChooser chooseBrain2 = new JFileChooser();
     JFileChooser chooseWorld = new JFileChooser();
->>>>>>> origin/master
+
 
     public void loadImages() {
         try {
@@ -77,14 +75,13 @@ public class MapGui extends JFrame {
 
     public MapGui(Map worldMap) {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-<<<<<<< HEAD
         mapClass = worldMap;
         this.worldMap = worldMap.getMap();
     }
     
     public MapGui(MapCell[][] worldMap){
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-=======
+
         gameMenu.add(setAntBrains);
         setAntBrains.addMouseListener(listener);
         gameMenu.add(selectWorld);
@@ -108,7 +105,6 @@ public class MapGui extends JFrame {
         okButton.addMouseListener(listener);
         gameOptionsFrame.add(optionsPanel);
         gameOptionsFrame.pack();
->>>>>>> origin/master
         this.worldMap = worldMap;
     }
 
