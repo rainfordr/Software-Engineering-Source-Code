@@ -6,6 +6,7 @@
 package group20.antgame;
 
 import group20.exceptions.InvalidMapSyntaxException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
@@ -20,8 +21,21 @@ import static org.junit.Assert.*;
  * @author owner
  */
 public class MapParserIT {
+    char[][] testMap;
+    String validMapPath;
+    String[] mapStringArray;
     
-    public MapParserIT() {
+    public MapParserIT() throws IOException {
+        int xy = 10;
+        testMap = new char[xy][xy];
+        validMapPath = "C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\tiny.world";
+        mapStringArray = Utils.fileToStringArray(validMapPath);
+        for(int row = 2; row < xy + 2; row++){
+            String rowString = mapStringArray[row].replaceAll(" ", "");
+            for(int col = 0; col < xy; col++){
+                testMap[col][row - 2] = rowString.charAt(col);
+            }
+        }
     }
     
     @BeforeClass
@@ -43,24 +57,22 @@ public class MapParserIT {
     /**
      * Test of parseMap method, of class MapParser.
      */
-//    @Test
-//    public void testParseMap(){
-//        System.out.println("parseMap");
-//        String[] mapFile = null;
-//        char lineSep = ' ';
-//        boolean isComp = false;
-//        MapParser instance = new MapParser();
-//        char[][] expResult = null;
-//        char[][] result;
-//        try {
-//            result = instance.parseMap(mapFile, lineSep, isComp);
-//            assertArrayEquals(expResult, result);
-//        catch(InvalidMapSyntaxException ex){
-//                
-//        }
-        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testParseMapPassesWihValidMap(){
+        System.out.println("parseMap");
+        String[] mapFile = null;
+        boolean isComp = false;
+        MapParser instance = new MapParser();
+        char[][] expResult = testMap;
+        char[][] result;
+        try {
+            result = instance.parseMap(mapStringArray, isComp);
+            assertArrayEquals(expResult, result);
+        }
+        catch(InvalidMapSyntaxException ex){
+                fail("found valid map invalid");
+        }
+    }
 
     /**
      * Test of topRowOK method, of class MapParser.

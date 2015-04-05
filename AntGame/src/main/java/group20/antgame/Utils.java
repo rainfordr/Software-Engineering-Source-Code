@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,18 +23,32 @@ import java.util.List;
 public class Utils {
     public static String fileToString(String pathname) throws FileNotFoundException{
         File file = new File(pathname);
-        StringBuilder fileContents = new StringBuilder((int)file.length());
-        Scanner scanner = new Scanner(file);
-        String lineSeparator = System.getProperty("line.separator");
-
+//        StringBuilder fileContents = new StringBuilder((int)file.length());
+//        Scanner scanner = new Scanner(file);
+//        String lineSeparator = System.getProperty("line.separator");
+//
+//        try {
+//            while(scanner.hasNextLine()) {        
+//                fileContents.append(scanner.nextLine()).append("\n");
+//            }
+//            return fileContents.toString();
+//        } finally {
+//            scanner.close();
+//        }
+        BufferedReader buffer = new BufferedReader(new FileReader(file));
+        String readLine = "";
+        String map = "";
         try {
-            while(scanner.hasNextLine()) {        
-                fileContents.append(scanner.nextLine()).append(lineSeparator);
+            while ((readLine = buffer.readLine()) != null) {
+                if(!map.equals("")){
+                    map += "\n";
+                }
+                map += (readLine); 
             }
-            return fileContents.toString();
-        } finally {
-            scanner.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return map;
     }
 
     public static String[] fileToStringArray(String filename) throws IOException {
