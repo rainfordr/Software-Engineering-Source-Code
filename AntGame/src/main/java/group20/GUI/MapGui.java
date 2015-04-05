@@ -14,6 +14,8 @@ import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -38,6 +40,8 @@ public class MapGui extends JFrame {
     MapCell[][] worldMap;
     JMenuBar menuBar = new JMenuBar();
     JMenu gameMenu = new JMenu("Game");
+    JMenu worldSubMenu = new JMenu("World");
+    JMenuItem randomWorld = new JMenuItem("Use Random World");
     JMenuItem setAntBrains = new JMenuItem("Set Ant Brains");
     JMenuItem selectWorld = new JMenuItem("Select World");
     JMenuItem resetButton = new JMenuItem("Reset");
@@ -54,6 +58,7 @@ public class MapGui extends JFrame {
     JFileChooser chooseBrain1 = new JFileChooser();
     JFileChooser chooseBrain2 = new JFileChooser();
     JFileChooser chooseWorld = new JFileChooser();
+    WorldGenerator wg = new WorldGenerator();
 
     public void loadImages() {
         try {
@@ -80,8 +85,11 @@ public class MapGui extends JFrame {
 
     private void windowSetup() {
         gameMenu.add(setAntBrains);
+        worldSubMenu.add(selectWorld);
+        worldSubMenu.add(randomWorld);
+        randomWorld.addMouseListener(listener);
         setAntBrains.addMouseListener(listener);
-        gameMenu.add(selectWorld);
+        gameMenu.add(worldSubMenu);
         selectWorld.addMouseListener(listener);
         gameMenu.add(resetButton);
         resetButton.addMouseListener(listener);
@@ -89,7 +97,7 @@ public class MapGui extends JFrame {
         exitButton.addMouseListener(listener);
         menuBar.add(gameMenu);
         this.setJMenuBar(menuBar);
-        optionsPanel.setLayout(new GridLayout(0,2));
+        optionsPanel.setLayout(new GridLayout(0, 2));
         optionsPanel.add(selectBrain1);
         optionsPanel.add(selectBrain1Button);
         selectBrain1Button.addMouseListener(listener);
@@ -103,8 +111,8 @@ public class MapGui extends JFrame {
         gameOptionsFrame.add(optionsPanel);
         gameOptionsFrame.pack();
     }
-    
-    public MapGui(MapCell[][] worldMap){
+
+    public MapGui(MapCell[][] worldMap) {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         windowSetup();
         this.worldMap = worldMap;
@@ -157,11 +165,6 @@ public class MapGui extends JFrame {
 
     public static void main(String[] args) throws FileNotFoundException, InvalidWorldException {
         MapGui m = new MapGui(new Map(new File("./src/main/resources/worlds/1.world")));
-//        WorldGenerator wg = new WorldGenerator();
-//        char[][] charMap = wg.getGeneratedCharMap();
-//        Map mapClass = new Map(charMap);
-//        MapCell[][] map = mapClass.getCellMap();        
-//        MapGui m = new MapGui(map);
         m.loadImages();
         m.drawMap();
     }
@@ -178,10 +181,10 @@ public class MapGui extends JFrame {
                 System.exit(0);
             }
             if (e.getSource() == resetButton) {
-                
+
             }
             if (e.getSource() == cancelButton) {
-                gameOptionsFrame.setVisible(false);                
+                gameOptionsFrame.setVisible(false);
             }
             if (e.getSource() == setAntBrains) {
                 gameOptionsFrame.setVisible(true);
@@ -192,8 +195,27 @@ public class MapGui extends JFrame {
             if (e.getSource() == selectBrain2Button) {
                 chooseBrain2.showOpenDialog(gameMenu);
             }
+            if (e.getSource() == randomWorld) {
+                char[][] charMap = wg.getGeneratedCharMap();
+                Map mapClass = new Map(charMap);
+                worldMap = mapClass.getCellMap();
+                mapPanel = new JPanel();
+                drawMap();
+            }
             if (e.getSource() == selectWorld) {
-                chooseWorld.showOpenDialog(gameMenu);
+                if (chooseWorld.showOpenDialog(gameMenu) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        System.out.println("HERE");
+                        Map fromFile = new Map(chooseWorld.getSelectedFile());
+                        worldMap = fromFile.getCellMap();
+                        mapPanel = new JPanel();
+                        drawMap();
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(MapGui.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InvalidWorldException ex) {
+                        Logger.getLogger(MapGui.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         }
 
