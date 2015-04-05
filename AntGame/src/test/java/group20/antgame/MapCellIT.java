@@ -29,12 +29,12 @@ public class MapCellIT {
     Ant testAnt, blackAnt, redAnt;
     
     public MapCellIT() {
-        clearCell = new MapCell(new Pos(1,2));
-        rockyCell = new MapCell(new Pos(2,3));
-        startCell = new MapCell(startPos);
-        moveToCell = new MapCell(new Pos(1,1));
-        redHillCell = new MapCell(new Pos(3,3));
-        blackHillCell = redHillCell = new MapCell(new Pos(4,4));
+        clearCell = new MapCell(new Pos(1,2), false,0, null);
+        rockyCell = new MapCell(new Pos(2,3), true,0, null);
+        startCell = new MapCell(startPos, false,0, null);
+        moveToCell = new MapCell(new Pos(1,1), false,0, null);
+        redHillCell = new MapCell(new Pos(3,3), false,0, RED);
+        blackHillCell = redHillCell = new MapCell(new Pos(4,4), false,0, BLACK);
         startPos = new Pos(0,0);
         testAnt = new Ant(RED, 0, startPos);
         redAnt = new Ant(RED, 0, startPos);
@@ -232,7 +232,6 @@ public class MapCellIT {
         boolean result = instance.checkMarker(marker, c);
         assertTrue(result);
         instance.clearMarker(marker, c);
-        result = instance.checkMarker(marker, c);
         assertFalse(instance.checkMarker(marker, c));
     }
     
@@ -306,12 +305,8 @@ public class MapCellIT {
         System.out.println("isAntHillCell");
         Ant.Colour c = BLACK;
         MapCell instance = blackHillCell;
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.isAntHillCell(c);
-        assertEquals(expResult, result);
-        instance.setAntHillCell(c);
-        expResult = true;
-        result = instance.isAntHillCell(c);
         assertEquals(expResult, result);
     }
     
@@ -322,13 +317,9 @@ public class MapCellIT {
     public void testIsRedAntHillCell() {
         System.out.println("isAntHillCell");
         Ant.Colour c = RED;
-        MapCell instance = redHillCell;
-        boolean expResult = false;
+        MapCell instance = new MapCell(new Pos(3,3), false, 0, RED);
+        boolean expResult = true;
         boolean result = instance.isAntHillCell(c);
-        assertEquals(expResult, result);
-        instance.setAntHillCell(c);
-        expResult = true;
-        result = instance.isAntHillCell(c);
         assertEquals(expResult, result);
     }
     
@@ -338,15 +329,10 @@ public class MapCellIT {
     @Test
     public void testIsRedAntHillCellNotFoundWhenBlackIsSet() {
         System.out.println("isAntHillCell");
-        Ant.Colour c = BLACK;
-        Colour red = RED;
+        Colour c = RED;
         MapCell instance = blackHillCell;
         boolean expResult = false;
         boolean result = instance.isAntHillCell(c);
-        assertEquals(expResult, result);
-        instance.setAntHillCell(c);
-        expResult = false;
-        result = instance.isAntHillCell(red);
         assertEquals(expResult, result);
     }
     

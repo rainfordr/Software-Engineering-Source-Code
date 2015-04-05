@@ -1,6 +1,7 @@
 package group20.antgame;
 
 import group20.*;
+import static group20.antgame.Ant.Colour.*;
 import group20.exceptions.InvalidWorldException;
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,21 +22,22 @@ import java.util.logging.Logger;
  * @author 118481
  */
 public class Map {
-
+    private char[][] charMap;
     private MapCell[][] map;
-    private int width = 150;
-    private int height = 150;
+    private int width;
+    private int height;
 
     /**
      * This constructor for the Maze class constructs an array of null cells
      *
-     * @param x This is the variable that holds the width of the map
-     * @param y This is the variable that holds the height of the map
+     * @param charMap the 2d char array representation of the map to convert to 
+     * a cell[][;
      */
-    public Map(int x, int y) {
-        map = new MapCell[x][y];
-        width = x;
-        height = y;
+    public Map(char[][] charMap) {
+        this.charMap = charMap;
+        width = charMap[0].length;
+        height = charMap.length;
+        map = new MapCell[width][height];
     }
 
     public Map(File worldFile) throws FileNotFoundException, InvalidWorldException {
@@ -50,20 +52,21 @@ public class Map {
                     int col = 0;
                     for (String cell : readLine.trim().split("\\s+")) {
                         if (cell.equals("#")) {
-                            map[col][row] = new MapCell(new Pos(col, row), true, 0, false, false);
+                            map[col][row] = new MapCell(new Pos(col, row), true, 0, null);
                         }
                         if (cell.equals(".")) {
-                            map[col][row] = new MapCell(new Pos(col, row), false, 0, false, false);
+                            map[col][row] = new MapCell(new Pos(col, row), false, 0, null);
                         }
                         if (cell.equals("+")) {
-                            map[col][row] = new MapCell(new Pos(col, row), false, 0, true, false);
+                            map[col][row] = new MapCell(new Pos(col, row), false, 0, RED);
                         }
                         if (cell.equals("-")) {
-                            map[col][row] = new MapCell(new Pos(col, row), false, 0, false, true);
+                            map[col][row] = new MapCell(new Pos(col, row), false, 0, BLACK);
                         }
                         if (cell.matches("[0-9]")) {
-                            System.out.println("found food: " + Integer.parseInt(cell));
-                            map[col][row] = new MapCell(new Pos(col, row), false, Integer.parseInt(cell), false, false);
+                            int foodAmount = Integer.parseInt(cell);
+                            System.out.println("found food: " + foodAmount);
+                            map[col][row] = new MapCell(new Pos(col, row), false, foodAmount, null);
                         }
                         col++;
                     }
@@ -98,6 +101,32 @@ public class Map {
             }
         }
         return valid;
+    }
+    
+    public MapCell[][] getCellMap(){
+        for(int row = 0; row < height; row++){
+            for(int col = 0; col < width; col++){
+                char cell = charMap[col][row];
+                if (cell == '#') {
+                            map[col][row] = new MapCell(new Pos(col, row), true, 0, null);
+                }
+                if (cell == '.') {
+                    map[col][row] = new MapCell(new Pos(col, row), false, 0, null);
+                }
+                if (cell == '+') {
+                    map[col][row] = new MapCell(new Pos(col, row), false, 0, RED);
+                }
+                if (cell == '-') {
+                    map[col][row] = new MapCell(new Pos(col, row), false, 0, BLACK);
+                }
+                if (Character.isDigit(cell)) {                    
+                    int foodAmount = Integer.parseInt(("" + cell));
+                    System.out.println("found food: " + foodAmount);
+                    map[col][row] = new MapCell(new Pos(col, row), false, foodAmount, null);
+                }
+            }
+        }
+        return map;
     }
 
     /**

@@ -22,74 +22,90 @@ public class MapParser {
      * @return the initialised char[][] representation of the map.
      * @throws group20.exceptions.InvalidMapSyntaxException
      */
-    public char[][] parseMap(String[] mapFile, char lineSep, boolean isComp) throws InvalidMapSyntaxException{
+    public char[][] parseMap(String[] mapFile, boolean isComp) throws InvalidMapSyntaxException{
         int fileRows = mapFile.length;
         if(fileRows < 3){
             throw new InvalidMapSyntaxException("Invalid File Syntax. Requires two rows of ints followed by Map representation");
-        }        
+        }
         char[][] map; // = new MapCell[150][150];
-        int x = 0;
-        int y = 0;
-        String Xsize = "";
+        int xSize = 0;
+        int ySize = 0;
+        String xSizeStr = "";
         if(mapFile[0].length() < 1){
             throw new InvalidMapSyntaxException("First row of map should be int X size of map");
         }
         else{
-            Xsize = mapFile[0];
-            if(!isPosInt(Xsize)){
+            xSizeStr = mapFile[0];
+            if(!dimensionOK(xSizeStr)||!isPosInt(xSizeStr)){
                 throw new InvalidMapSyntaxException("First row of map should be int X size of map");
             }
-            x = Integer.parseInt(Xsize);
+            xSize = Integer.parseInt(xSizeStr);
         }
-        String Ysize = "";
+        String ySizeStr = "";
         if(mapFile[1].length() < 1){
             throw new InvalidMapSyntaxException("Second row of map should be int Y size of map");
         }
         else{
-            Ysize = mapFile[1];
-            if(!isPosInt(Ysize)){
+            ySizeStr = mapFile[1];
+            if(!dimensionOK(ySizeStr)||!isPosInt(ySizeStr)){
                 throw new InvalidMapSyntaxException("Second row of map should be int Y size of map");
             }
-            y = Integer.parseInt(Ysize);
+            ySize = Integer.parseInt(ySizeStr);
         }
-        if(isComp && (y != 150 || x != 150)){
-            throw new InvalidMapSyntaxException("Competition Map standards must be 150 x 150. Map is " + x +" x " + y + ".");
+        if(isComp && (ySize != 150 || xSize != 150)){
+            throw new InvalidMapSyntaxException("Competition Map standards must be 150 x 150. Map is " + xSize +" x " + ySize + ".");
         }
-        map = new char[x][y];
-        if(fileRows - 2 < y){
-            throw new InvalidMapSyntaxException("Stated and actual Y values differ. Stated is " + y +", actual is " +(fileRows - 2)+ ".");
+        map = new char[xSize][ySize];
+        if(fileRows - 2 < ySize){
+            throw new InvalidMapSyntaxException("Stated and actual Y values differ. Stated is " + ySize +", actual is " +(fileRows - 2)+ ".");
         }
-        if(!oddEdgeOK(mapFile[2], y)){
+        if(!edgeOK(mapFile[2], ySize)){
             throw new InvalidMapSyntaxException("The edges of the map should all be rock(# char)");
         }
         else{
             String row = mapFile[2].replaceAll(" ", "");
-            for(int i = 0; i < row.length(); i++){
-                map[x][i] = row.charAt(i);
+            for(int cell = 0; cell < row.length(); cell++){
+                map[cell][0] = row.charAt(cell);
             }
         }
-        
-        
-        
-        int StringPtr = 0;
-        int rowPtr = 0;
-        return null;
+        for(int rowNum = 3, rowEnd = mapFile.length - 1; rowNum < rowEnd; rowNum++){
+            if(!bodyRowOK(mapFile[rowNum], ySize)){
+                throw new InvalidMapSyntaxException("rows must only contain '#', '.' '+', '-' or [1-9] seperated by a single space char");
+            }
+            else{
+                String row = mapFile[rowNum].replaceAll(" ", "");
+                for(int cell = 0; cell < row.length(); cell++){
+                    map[cell][rowNum - 2] = row.charAt(cell);                        
+                }
+            }
+        }
+        int finalRow = mapFile.length - 1;
+        if (edgeOK(mapFile[finalRow], ySize)) {
+            String row = mapFile[finalRow].replaceAll(" ", "");
+            for (int cell = 0; cell < row.length(); cell++) {
+                map[cell][finalRow - 2] = row.charAt(cell);
+            }
+        } 
+        else {
+            throw new InvalidMapSyntaxException("The edges of the map should all be rock(# char)");
+        }
+        return map;
     }
     
-    public boolean oddEdgeOK(String row, int rowSize){
-        return row.matches("( ?# ){" +(rowSize-1)+ "}#" );
+    public boolean dimensionOK(String row){
+        return row.matches("(\\d+)(\\s*)");
     }
     
-    public boolean evenEdgeOK(String row, int rowSize){
-        return row.matches("( ?#){" + (rowSize) + "}");
+    public boolean edgeOK(String row, int rowSize){
+        return row.matches("( ?# )(# ){" + (rowSize -2) + "}(# *)");
     }
     
-    public boolean EvenBodyRowOK(String row, int rowSize){
-        return row.matches("( ?#)(#|+|-|[1-9]|.){" + (rowSize-2) + "}#");
+    public boolean bodyRowOK(String row, int rowSize){
+        return row.matches("( ?)# ((# )|(\\+ )|(\\- )|([1-9] )|(. )){" + (rowSize-2) + "}# *");
     }
     
     //Method to check if given String is an integer.
-    boolean isPosInt(String row){
+    public boolean isPosInt(String row){
         row = row.replace(" ", "");
         int result;
         try{
