@@ -5,6 +5,18 @@
  */
 package group20.antgame;
 
+import com.sun.org.apache.bcel.internal.generic.D2F;
+import group20.Conditions.Condition;
+import group20.Conditions.Foe;
+import group20.Conditions.FoeHome;
+import group20.Conditions.FoeMarker;
+import group20.Conditions.FoeWithFood;
+import group20.Conditions.Food;
+import group20.Conditions.Friend;
+import group20.Conditions.FriendWithFood;
+import group20.Conditions.Home;
+import group20.Conditions.Marked;
+import group20.Conditions.Rock;
 import group20.Instructions.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -16,15 +28,19 @@ import java.util.regex.*;
  */
 public class BrainParser {
 
+    static String conditionsRegex = ("(Foe|FoeHome|FoeMarker|FoeWithFood|Food|Friend|FriendWithFood|Home|Marker(i)|Rock)");
+
     public static enum instructionType {
 
+        //HERE, AHEAD, LEFT_AHEAD, RIGHT_AHEAD;
         Move("Move ([0-9]*) ([0-9]*)"),
         PickUp("pickUp ([0-9]*) ([0-9]*)"),
         Drop("Drop ([0-9]*)"),
         Turn("Turn (Left|Right) ([0-9]*)"),
         Flip("Flip ([0-9]*) ([0-9]*) ([0-9]*)"),
         Mark("Mark ([0-9]*) ([0-9]*)"),
-        Unmark("Unmark ([0-9]*) ([0-9]*)");
+        Unmark("Unmark ([0-9]*) ([0-9]*)"),
+        Sense("Sense (Here|Ahead|LeftAhead|RightAhead) ([0-9]*) ([0-9*]) " + conditionsRegex);
 
         public final String pattern;
 
@@ -33,6 +49,105 @@ public class BrainParser {
         }
 
     }
+
+    public Instruction parseMarker(int markerNum, int stateNum) {
+
+        Instruction returnedInstruction = null;
+
+        switch (markerNum) {
+            case 0:
+                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER0, stateNum);
+                break;
+            case 1:
+                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER1, stateNum);
+                break;
+            case 2:
+                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER2, stateNum);
+                break;
+            case 3:
+                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER3, stateNum);
+                break;
+            case 4:
+                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER4, stateNum);
+                break;
+            case 5:
+                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER5, stateNum);
+                break;
+        }
+
+        return returnedInstruction;
+
+    }
+
+    public Condition parseCondition(String condition) {
+        Condition con = null;
+
+        switch (condition) {
+            case "Foe":
+                con = new Foe();
+                break;
+            case "FoeHome":
+                con = new FoeHome();
+                break;
+            case "FoeMarker":
+                con = new FoeMarker();
+                break;
+            case "FoeWithFood":
+                con = new FoeWithFood();
+                break;
+            case "Food":
+                con = new Food();
+                break;
+            case "Friend":
+                con = new Friend();
+                break;
+            case "FriendWithFood":
+                con = new FriendWithFood();
+                break;
+            case "Home":
+                con = new Home();
+                break;
+            case "Marked":
+                throw new UnsupportedOperationException("Not implemented yet");
+            case "Rock":
+                con = new Rock();
+
+        }
+        return con;
+    }
+
+    public Instruction parseUnmark(int markerNum, int stateNum) {
+
+        Instruction returnedInstruction = null;
+
+        switch (markerNum) {
+            case 0:
+                returnedInstruction = new Unmark(Mark.Marker.MARKER0, stateNum);
+                break;
+            case 1:
+                returnedInstruction = new Unmark(Mark.Marker.MARKER1, stateNum);
+                break;
+            case 2:
+                returnedInstruction = new Unmark(Mark.Marker.MARKER2, stateNum);
+                break;
+            case 3:
+                returnedInstruction = new Unmark(Mark.Marker.MARKER3, stateNum);
+                break;
+            case 4:
+                returnedInstruction = new Unmark(Mark.Marker.MARKER4, stateNum);
+                break;
+            case 5:
+                returnedInstruction = new Unmark(Mark.Marker.MARKER5, stateNum);
+                break;
+        }
+
+        return returnedInstruction;
+
+    }
+    
+
+    
+    
 
     /**
      *
@@ -107,16 +222,14 @@ public class BrainParser {
                 while (m2.find()) {
                     String s = m2.group(1);
                     String s2 = m2.group(2);
-                    int st1 = Integer.parseInt(s);
                     int st2 = Integer.parseInt(s2);
-                    instructions.add(new PickUp(st1, st2));
 
-                    switch (m2.group(1)) {
+                    switch (s) {
                         case "Left":
                             instructions.add(new Turn(Turn.LeftOrRight.LEFT, st2));
                             break;
 
-                        case  "Right":
+                        case "Right":
                             instructions.add(new Turn(Turn.LeftOrRight.RIGHT, st2));
 
                     }
@@ -149,20 +262,7 @@ public class BrainParser {
                     String s2 = m2.group(2);
                     int st = Integer.parseInt(s2);
                     int i = Integer.parseInt(s);
-                    switch (i) {
-                        case 0:
-                            instructions.add(new group20.Instructions.Mark(group20.Instructions.Mark.Marker.MARKER0, st));
-                        case 1:
-                            instructions.add(new group20.Instructions.Mark(group20.Instructions.Mark.Marker.MARKER1, st));
-                        case 2:
-                            instructions.add(new group20.Instructions.Mark(group20.Instructions.Mark.Marker.MARKER2, st));
-                        case 3:
-                            instructions.add(new group20.Instructions.Mark(group20.Instructions.Mark.Marker.MARKER3, st));
-                        case 4:
-                            instructions.add(new group20.Instructions.Mark(group20.Instructions.Mark.Marker.MARKER4, st));
-                        case 5:
-                            instructions.add(new group20.Instructions.Mark(group20.Instructions.Mark.Marker.MARKER5, st));
-                    }
+                    instructions.add(parseMarker(i, st));
 
                 }
 
@@ -175,21 +275,37 @@ public class BrainParser {
                     String s2 = m2.group(2);
                     int st = Integer.parseInt(s2);
                     int i = Integer.parseInt(s);
-                    switch (i) {
-                        case 0:
-                            instructions.add(new Unmark(Mark.Marker.MARKER0, st));
-                        case 1:
-                            instructions.add(new Unmark(Mark.Marker.MARKER1, st));
-                        case 2:
-                            instructions.add(new Unmark(Mark.Marker.MARKER2, st));
-                        case 3:
-                            instructions.add(new Unmark(Mark.Marker.MARKER3, st));
-                        case 4:
-                            instructions.add(new Unmark(Mark.Marker.MARKER4, st));
-                        case 5:
-                            instructions.add(new Unmark(Mark.Marker.MARKER5, st));
-                    }
+                    instructions.add(parseUnmark(i, st));
 
+                }
+
+            } else if (m.group(instructionType.Sense.name()) != null) {
+                String contents = m.group();
+                String regex = instructionType.Sense.pattern;
+                Matcher m2 = Pattern.compile(regex).matcher(contents);
+
+                while (m2.find()) {
+
+                    String senseDir = m2.group(1);
+                    String s = m2.group(2);
+                    int st1 = Integer.parseInt(s);
+                    String s2 = m2.group(3);
+                    int st2 = Integer.parseInt(s2);
+                    String cond = m2.group(4);
+                    String markerNum = m2.group(5);
+                    Condition con = parseCondition(cond);
+
+                    //(Here|Ahead|LeftAhead|RightAhead)
+                    switch (senseDir) {
+                        case "Here":
+                            instructions.add(new Sense(Sense.SenseDir.HERE, st1, st2, con));
+                        case "Ahead":
+                            instructions.add(new Sense(Sense.SenseDir.AHEAD, st1, st2, con));
+                        case "LeftAhead":
+                            instructions.add(new Sense(Sense.SenseDir.LEFT_AHEAD, st1, st2, con) );
+                        case "RightAhead":
+                            instructions.add(new Sense(Sense.SenseDir.RIGHT_AHEAD, st1, st2, con));
+                    }
                 }
 
             } else {
