@@ -74,11 +74,11 @@ public class MapGui extends JFrame {
     public MapGui(Map worldMap) {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         mapClass = worldMap;
+        windowSetup();
         this.worldMap = worldMap.getMap();
     }
-    
-    public MapGui(MapCell[][] worldMap){
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+    private void windowSetup() {
         gameMenu.add(setAntBrains);
         setAntBrains.addMouseListener(listener);
         gameMenu.add(selectWorld);
@@ -102,6 +102,11 @@ public class MapGui extends JFrame {
         okButton.addMouseListener(listener);
         gameOptionsFrame.add(optionsPanel);
         gameOptionsFrame.pack();
+    }
+    
+    public MapGui(MapCell[][] worldMap){
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        windowSetup();
         this.worldMap = worldMap;
     }
 
