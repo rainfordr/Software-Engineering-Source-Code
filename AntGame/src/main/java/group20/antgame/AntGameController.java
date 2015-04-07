@@ -5,10 +5,17 @@
  */
 package group20.antgame;
 
+import group20.GUI.MapGui;
+
 /**
  *
  * @author owner
  */
 public class AntGameController {
+    private AntGameModel model;
+    private MapGui mapGui; 
     
+    public AntGameController(){
+        
+    }
 }

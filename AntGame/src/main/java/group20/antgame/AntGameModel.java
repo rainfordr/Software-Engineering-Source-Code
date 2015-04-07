@@ -12,6 +12,7 @@ import group20.Instructions.Sense.SenseDir;
 import group20.Instructions.Turn.LeftOrRight;
 import static group20.Instructions.Turn.LeftOrRight.*;
 import group20.antgame.Ant.Colour;
+import static group20.antgame.Ant.Colour.*;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -299,7 +300,7 @@ public class AntGameModel {
          }
      }
      
-     public void Step(int id){
+     public void step(int id){
          if(antIsAlive(id)){
              Pos pos = findAnt(id);
              Ant ant = antAt(pos);
@@ -398,5 +399,33 @@ public class AntGameModel {
              }
          }
      }
+     public void playRound(){
+         for(int id: ants.keySet()){
+             step(id);
+         }
+     }
      
+     public void populateAntHills(){
+         int mapWidth = map[0].length;
+         int mapHeight = map.length;
+         int id = 0;
+         for(int y = 0; y < mapHeight; y++){
+             for(int x = 0; x < mapWidth; x++){
+                 Pos p = new Pos(x, y);
+                 MapCell cell = mapCell(p);
+                 if(cell.isAntHillCell(RED)){
+                     Ant a = new Ant(RED, id, p);
+                     ants.put(id, a);
+                     cell.putAnt(a);
+                     id++;
+                 }
+                 else if(cell.isAntHillCell(BLACK)){
+                     Ant a = new Ant(BLACK, id, p);
+                     ants.put(id, a);
+                     cell.putAnt(a);
+                     id++;
+                 }
+             }
+         }
+     }
 }

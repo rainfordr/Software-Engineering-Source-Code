@@ -21,6 +21,7 @@ public class Ant {
     private Dir direction;
     private boolean hasFood;
     private Pos position;    
+    
     public Ant(Colour colour, int id, Pos position){
         this.colour = colour;
         this.id = id;
