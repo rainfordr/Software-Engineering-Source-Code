@@ -32,8 +32,8 @@ public class AntGameModel {
    private RandomGenerator rand;
 
     
-    public AntGameModel(){
-        map = new MapCell[150][150];
+    public AntGameModel(MapCell[][] map){
+        this.map = map;
         redBrain = new Instruction[1000];
         blackBrain = new Instruction[1000];
         brainParser = new BrainParser();
@@ -216,10 +216,7 @@ public class AntGameModel {
     
     public boolean cellMatches(Pos p, Colour c, Condition cond){
         if(rocky(p)){
-            if(cond instanceof Rock){
-                return true;
-            }
-            return false;            
+            return cond instanceof Rock;            
         }
         else if(cond instanceof Rock){
             return false;

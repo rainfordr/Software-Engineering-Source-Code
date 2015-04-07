@@ -15,6 +15,7 @@ import static group20.Instructions.Sense.SenseDir.*;
 
 import group20.Instructions.Turn;
 import static group20.Instructions.Turn.LeftOrRight.*;
+import static group20.antgame.Ant.Colour.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -469,30 +470,52 @@ public class AntGameModelTest {
      * Test of otherColour method, of class AntGameModel.
      */
     @Test
-    public void testOtherColour() {
+    public void testOtherColourRedReturnsBlack() {
         System.out.println("otherColour");
-        Ant.Colour c = null;
+        Ant.Colour c = RED;
         AntGameModel instance = new AntGameModel();
-        Ant.Colour expResult = null;
+        Ant.Colour expResult = BLACK;
         Ant.Colour result = instance.otherColour(c);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test of otherColour method, of class AntGameModel.
+     */
+    @Test
+    public void testOtherColourBlackReturnsRed() {
+        System.out.println("otherColour");
+        Ant.Colour c = BLACK;
+        AntGameModel instance = new AntGameModel();
+        Ant.Colour expResult = RED;
+        Ant.Colour result = instance.otherColour(c);
+        assertEquals(expResult, result);
     }
 
     /**
      * Test of rocky method, of class AntGameModel.
      */
     @Test
-    public void testRocky() {
+    public void testRockyFailsOnClearCell() {
         System.out.println("rocky");
-        Pos p = null;
+        Pos p = centre;
         AntGameModel instance = new AntGameModel();
         boolean expResult = false;
         boolean result = instance.rocky(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test of rocky method, of class AntGameModel.
+     */
+    @Test
+    public void testRockyPassesOnEdge() {
+        System.out.println("rocky");
+        Pos p = centre;
+        AntGameModel instance = new AntGameModel();
+        boolean expResult = false;
+        boolean result = instance.rocky(p);
+        assertEquals(expResult, result);
     }
 
     /**
