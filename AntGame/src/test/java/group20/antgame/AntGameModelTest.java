@@ -10,6 +10,7 @@ import static group20.Instructions.Dir.*;
 import group20.Instructions.Dir;
 import group20.Instructions.Instruction;
 import group20.Instructions.Mark;
+import static group20.Instructions.Mark.Marker.*;
 import group20.Instructions.Sense;
 import static group20.Instructions.Sense.SenseDir.*;
 
@@ -715,6 +716,7 @@ public class AntGameModelTest {
         AntGameModel instance = new AntGameModel(testMap);
         boolean expResult = false;
         boolean result = instance.antIsAlive(id);
+        assertEquals(expResult, result);
         instance.populateAntHills();
         expResult = true;
         result = instance.antIsAlive(id);
@@ -741,103 +743,83 @@ public class AntGameModelTest {
     @Test
     public void testKillAntAt() {
         System.out.println("KillAntAt");
-        Pos p = null;
+        Pos p = antPos;
+        int id = 0;
         AntGameModel instance = new AntGameModel(testMap);
+        instance.populateAntHills();
+        boolean expResult = true;
+        boolean result = instance.antIsAlive(id);
+        assertEquals(expResult, result);
         instance.KillAntAt(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        expResult = false;
+        result = instance.antIsAlive(id);
+        assertEquals(expResult, result);
+        result = instance.someAntIsAt(p);
+        assertEquals(expResult, result);
     }
 
     /**
      * Test of setMarkerAt method, of class AntGameModel.
      */
     @Test
-    public void testSetMarkerAt() {
+    public void testCheckSetClearMarkerAt() {
         System.out.println("setMarkerAt");
-        Pos p = null;
-        Ant.Colour c = null;
-        Mark.Marker m = null;
-        AntGameModel instance = new AntGameModel(testMap);
-        instance.setMarkerAt(p, c, m);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of clearMarkerAt method, of class AntGameModel.
-     */
-    @Test
-    public void testClearMarkerAt() {
-        System.out.println("clearMarkerAt");
-        Pos p = null;
-        Ant.Colour c = null;
-        Mark.Marker m = null;
-        AntGameModel instance = new AntGameModel(testMap);
-        instance.clearMarkerAt(p, c, m);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of checkMarkerAt method, of class AntGameModel.
-     */
-    @Test
-    public void testCheckMarkerAt() {
-        System.out.println("checkMarkerAt");
-        Pos p = null;
-        Ant.Colour c = null;
-        Mark.Marker m = null;
+        Pos p = centre;
+        Ant.Colour c = RED;
+        Mark.Marker m = MARKER1;
         AntGameModel instance = new AntGameModel(testMap);
         boolean expResult = false;
         boolean result = instance.checkMarkerAt(p, c, m);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setMarkerAt(p, c, m);
+        expResult = true;
+        result = instance.checkMarkerAt(p, c, m);
+        assertEquals(expResult, result);
+        instance.clearMarkerAt(p, c, m);
+        expResult = false;
+        result = instance.checkMarkerAt(p, c, m);
+        assertEquals(expResult, result);
     }
 
     /**
-     * Test of checkAnyMarkerAt method, of class AntGameModel.
+     * Test of setMarkerAt method, of class AntGameModel.
      */
     @Test
-    public void testCheckAnyMarkerAt() {
-        System.out.println("checkAnyMarkerAt");
-        Pos p = null;
-        Ant.Colour c = null;
+    public void testCheckSetClearAnyMarkerAt() {
+        System.out.println("setMarkerAt");
+        Pos p = centre;
+        Ant.Colour c = RED;
+        Mark.Marker m = MARKER1;
         AntGameModel instance = new AntGameModel(testMap);
         boolean expResult = false;
         boolean result = instance.checkAnyMarkerAt(p, c);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setMarkerAt(p, c, m);
+        expResult = true;
+        result = instance.checkAnyMarkerAt(p, c);
+        assertEquals(expResult, result);
+        instance.clearMarkerAt(p, c, m);
+        expResult = false;
+        result = instance.checkAnyMarkerAt(p, c);
+        assertEquals(expResult, result);
     }
 
     /**
      * Test of foodAt method, of class AntGameModel.
      */
     @Test
-    public void testFoodAt() {
+    public void testSetFoodAtFoodAt() {
         System.out.println("foodAt");
-        Pos p = null;
+        Pos p = centre;
         AntGameModel instance = new AntGameModel(testMap);
         int expResult = 0;
         int result = instance.foodAt(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setFoodAt method, of class AntGameModel.
-     */
-    @Test
-    public void testSetFoodAt() {
-        System.out.println("setFoodAt");
-        Pos p = null;
-        int food = 0;
-        AntGameModel instance = new AntGameModel(testMap);
+        int food = 5;
         instance.setFoodAt(p, food);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        expResult = 0;
+        result = instance.foodAt(p);
+        assertEquals(expResult, result);
     }
 
     /**
@@ -846,14 +828,16 @@ public class AntGameModelTest {
     @Test
     public void testAntHillAt() {
         System.out.println("antHillAt");
-        Pos p = null;
-        Ant.Colour c = null;
+        Pos notHill = centre;
+        Pos isHill = antPos;
+        Ant.Colour c = RED;
         AntGameModel instance = new AntGameModel(testMap);
         boolean expResult = false;
-        boolean result = instance.antHillAt(p, c);
+        boolean result = instance.antHillAt(notHill, c);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        expResult = true;
+        result = instance.antHillAt(isHill, c);
+        assertEquals(expResult, result);
     }
 
     /**
