@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="1" time="0.934" errors="0" skipped="0" tests="77" name="group20.antgame.AntGameModelTest">
+<testsuite failures="0" time="358.358" errors="1" skipped="0" tests="76" name="group20.antgame.AntGameModelTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_71\jre\bin"/>
@@ -27,7 +27,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 8.1"/>
-    <property name="maven.ext.class.path" value="C:\Users\owner\AppData\Roaming\NetBeans\8.0.1\maven-nblib\netbeans-eventspy.jar"/>
+    <property name="maven.ext.class.path" value="C:\Users\owner\AppData\Roaming\NetBeans\8.0.1\maven-nblib\netbeans-eventspy.jar;C:\Users\owner\AppData\Roaming\NetBeans\8.0.1\maven-nblib\netbeans-eventspy.jar"/>
     <property name="classworlds.conf" value="C:\Program Files\NetBeans 8.0.1\java\maven\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.7.0_71\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\TXE Components\TCS\;C:\Program Files\Intel\TXE Components\TCS\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;C:\Users\owner\Documents\javacc-6.0\bin\lib;."/>
@@ -35,6 +35,8 @@
     <property name="java.class.version" value="51.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="os.version" value="6.3"/>
+    <property name="jpda.listen" value="true"/>
+    <property name="jpda.address" value="61176"/>
     <property name="user.home" value="C:\Users\owner"/>
     <property name="user.timezone" value="Europe/London"/>
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
@@ -42,10 +44,11 @@
     <property name="file.encoding" value="UTF-8"/>
     <property name="user.name" value="owner"/>
     <property name="java.class.path" value="C:\Program Files\NetBeans 8.0.1\java\maven\boot\plexus-classworlds-2.4.jar"/>
+    <property name="maven.surefire.debug" value="-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=61176"/>
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.7.0_71\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=group20.antgame.AntGameModelTest -Dmaven.ext.class.path=C:\Users\owner\AppData\Roaming\NetBeans\8.0.1\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 surefire:test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=group20.antgame.AntGameModelTest -DforkMode=once -Dmaven.surefire.debug=-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=61176 -Djpda.listen=true -Djpda.address=61176 -Dmaven.ext.class.path=C:\Users\owner\AppData\Roaming\NetBeans\8.0.1\maven-nblib\netbeans-eventspy.jar;C:\Users\owner\AppData\Roaming\NetBeans\8.0.1\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 surefire:test"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -57,15 +60,93 @@
     <property name="maven.home" value="C:\Program Files\NetBeans 8.0.1\java\maven"/>
     <property name="file.separator" value="\"/>
     <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="forkMode" value="once"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="0.048" classname="group20.antgame.AntGameModelTest" name="testStep">
-    <failure message="The test case is a prototype." type="java.lang.AssertionError">java.lang.AssertionError: The test case is a prototype.
-	at org.junit.Assert.fail(Assert.java:93)
-	at group20.antgame.AntGameModelTest.testStep(AntGameModelTest.java:1335)
+  <testcase time="0.03" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir0PassesCorrectOdd"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir0PassesCorrectEven"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir2PassesCorrectOdd"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir3PassesCorrectEven"/>
+  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir5PassesCorrectEven"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir1PassesCorrectOdd"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir3PassesCorrectOdd"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir4PassesCorrectOdd"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir0NotPassForOtherResults"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir5PassesCorrectOdd"/>
+  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testSensedCellHereFailsUnexpected"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir0FailsIncorrectEven"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir1PassesCorrectEven"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir4PassesCorrectEven"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir5FailsIncorrectOdd"/>
+  <testcase time="0.01" classname="group20.antgame.AntGameModelTest" name="testSensedCellHerePassesExpected"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testSensedCellAheadPassesExpected"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testSensedCellAheadLeftPassesExpected"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testSensedCellRIGHTAheadPassesExpected"/>
+  <testcase time="0.005" classname="group20.antgame.AntGameModelTest" name="testOtherColourRedReturnsBlack"/>
+  <testcase time="0.036" classname="group20.antgame.AntGameModelTest" name="testOtherColourBlackReturnsRed"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir2PassesCorrectEven"/>
+  <testcase time="0.012" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFriendREDPassesCorrectly"/>
+  <testcase time="0.006" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeBLACKFailsCorrectly"/>
+  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFriendREDFailsCorrectly"/>
+  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFriendBLACKPassesCorrectly"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeREDFailsCorrectly"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFriendBLACKFailsCorrectly"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeREDPassesCorrectly"/>
+  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeBLACKPassesCorrectly"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testSetFoodAtFoodAt"/>
+  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir0"/>
+  <testcase time="0.004" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeWithFood"/>
+  <testcase time="0.008" classname="group20.antgame.AntGameModelTest" name="testCellMatchesMarker"/>
+  <testcase time="0.007" classname="group20.antgame.AntGameModelTest" name="testCellMatchesHome"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testCheckSetClearAnyMarkerAt"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir5"/>
+  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFriendWithFood"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFood"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir1"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir1"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir3"/>
+  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir4"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAntIsAlive"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testCheckSetClearMarkerAt"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir2"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir5"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testSetDirection"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testCellMatchesRock"/>
+  <testcase time="0.015" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeMarker"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir4"/>
+  <testcase time="0.005" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeHome"/>
+  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir2"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testClearAntAtSomeAntat"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testSetResting"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testGetInstruction"/>
+  <testcase time="0.004" classname="group20.antgame.AntGameModelTest" name="testAdjacentAnts"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testSomeAntIsAt"/>
+  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testCheckForSurroundedAntAt"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCheckForSurroundedAnts"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testSetHasFood"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testRockyPassesOnEdge"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAntAtSetAntAt"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir3"/>
+  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testRockyFailsOnClearCell"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir0"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testSetState"/>
+  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testHasFood"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testKillAntAt"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testState"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testResting"/>
+  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testFindAnt"/>
+  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testAntHillAt"/>
+  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testColour"/>
+  <testcase time="357.378" classname="group20.antgame.AntGameModelTest" name="testPlayRound">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at group20.antgame.AntGameModel.resting(AntGameModel.java:129)
+	at group20.antgame.AntGameModel.step(AntGameModel.java:301)
+	at group20.antgame.AntGameModel.playRound(AntGameModel.java:398)
+	at group20.antgame.AntGameModel.playGame(AntGameModel.java:405)
+	at group20.antgame.AntGameModelTest.testPlayRound(AntGameModelTest.java:1341)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -99,84 +180,21 @@
 	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
 	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
-</failure>
-    <system-out>step
+</error>
+    <system-out>playRound
+found food: 9
+found food: 9
+found food: 3
+found food: 3
+found food: 9
+found food: 5
+found food: 5
+found food: 9
+found food: 3
+found food: 3
+found food: 9
+found food: 9
 </system-out>
   </testcase>
-  <testcase time="0.392" classname="group20.antgame.AntGameModelTest" name="testPlayRound"/>
-  <testcase time="0.034" classname="group20.antgame.AntGameModelTest" name="testSetState"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testColour"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testResting"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testState"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testKillAntAt"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testDirection"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testHasFood"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testAntHillAt"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testFindAnt"/>
-  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testRockyFailsOnClearCell"/>
-  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testCheckSetClearAnyMarkerAt"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testSetFoodAtFoodAt"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFriendWithFood"/>
-  <testcase time="0.004" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeWithFood"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir2"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir0"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir1"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir4"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir1"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir3"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testSetResting"/>
-  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir5"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir5"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testSetDirection"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir2"/>
-  <testcase time="0.005" classname="group20.antgame.AntGameModelTest" name="testSetHasFood"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir4"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testRockyPassesOnEdge"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testAntAtSetAntAt"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testClearAntAtSomeAntat"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAntIsAlive"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testSomeAntIsAt"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testTurnRightDir0"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCheckSetClearMarkerAt"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir3"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testAdjacentAnts"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testCellMatchesRock"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCheckForSurroundedAntAt"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCheckForSurroundedAnts"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFood"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCellMatchesMarker"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeMarker"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testGetInstruction"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCellMatchesHome"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeHome"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir1PassesCorrectOdd"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir0FailsIncorrectEven"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir3PassesCorrectOdd"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeREDFailsCorrectly"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFriendBLACKPassesCorrectly"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testSensedCellHereFailsUnexpected"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFriendREDPassesCorrectly"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testOtherColourRedReturnsBlack"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeREDPassesCorrectly"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir2PassesCorrectEven"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testTurnLeftDir0NotPassForOtherResults"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir3PassesCorrectEven"/>
-  <testcase time="0.003" classname="group20.antgame.AntGameModelTest" name="testSensedCellAheadPassesExpected"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testSensedCellAheadLeftPassesExpected"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir4PassesCorrectOdd"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir0PassesCorrectOdd"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeBLACKPassesCorrectly"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir1PassesCorrectEven"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFoeBLACKFailsCorrectly"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir2PassesCorrectOdd"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir5FailsIncorrectOdd"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir0PassesCorrectEven"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFriendREDFailsCorrectly"/>
-  <testcase time="0.035" classname="group20.antgame.AntGameModelTest" name="testSensedCellRIGHTAheadPassesExpected"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testCellMatchesFriendBLACKFailsCorrectly"/>
-  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir5PassesCorrectOdd"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testSensedCellHerePassesExpected"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir4PassesCorrectEven"/>
-  <testcase time="0.001" classname="group20.antgame.AntGameModelTest" name="testAdjacentCellDir5PassesCorrectEven"/>
-  <testcase time="0.002" classname="group20.antgame.AntGameModelTest" name="testOtherColourBlackReturnsRed"/>
+  <testcase time="0" classname="group20.antgame.AntGameModelTest" name="testDirection"/>
 </testsuite>

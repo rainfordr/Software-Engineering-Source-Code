@@ -126,7 +126,13 @@ public class AntGameModel {
     }
     
     public int resting(Ant a){
+        try{
+            return a.resting();
+        }catch(NullPointerException ex){
+            boolean test = true;
+        }
         return a.resting();
+
     }
     
     public Dir direction(Ant a){
@@ -162,10 +168,12 @@ public class AntGameModel {
     }
     
     public void setAntAt(Pos p, Ant a){
+        a.setPosition(p);
         mapCell(p).putAnt(a);
     }
     
     public void clearAntAt(Pos p){
+        antAt(p).setPosition(null);
         mapCell(p).clearAnt();
     }
     
@@ -399,9 +407,9 @@ public class AntGameModel {
          }
      }
      
-     public void playGame(){
+     public void playGame(int Rounds){
          String dump = "random seed: " + randomSeed + "\n";
-         for(int turn = 0; turn < 1001; turn ++){
+         for(int turn = 0; turn < Rounds; turn ++){
              playRound();
              dump += dumpRound(turn);
          }
@@ -419,7 +427,7 @@ public class AntGameModel {
                  if(cell.isAntHillCell(RED)){
                      Ant a = new Ant(RED, id, p);
                      ants.put(id, a);
-                     cell.putAnt(a);
+                     setAntAt(p, a);
                      id++;
                  }
                  else if(cell.isAntHillCell(BLACK)){
@@ -438,9 +446,9 @@ public class AntGameModel {
              for(int x = 0; x < map[0].length; x++){
                  Pos p = new Pos(x,y);
                  MapCell mc = mapCell(p);
-                 dump += "Cell (" + x + ", " + "y): ";
+                 dump += "Cell (" + x + ", " + y + "): ";
                  if(rocky(p)){
-                     dump += "rock\n";
+                     dump += "rock";
                  }
                  else {
                     if(foodAt(p) != 0){
@@ -485,9 +493,11 @@ public class AntGameModel {
                         }
                         dump += colour + " ant of id " + a.getID() + ", dir " + a.direction().ordinal() + ", food " + food + ", state " + a.state() + ", resting " + a.resting();
                     }
+                    
                  }
+                 
              }
-             dump += "\n"; 
+            dump += "\n";  
          }
          return dump;
      }

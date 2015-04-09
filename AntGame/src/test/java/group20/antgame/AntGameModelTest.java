@@ -1322,21 +1322,8 @@ public class AntGameModelTest {
     }
 
     /**
-     * Test of step method, of class AntGameModel.
-     */
-    @Test
-    public void testStep() {
-        System.out.println("step");
-        int id = 0;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
-        instance.populateAntHills();
-        instance.step(id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of playRound method, of class AntGameModel.
+     * Test of playRound method, of class AntGameModel. Compares provided dump files
+     * to the dump files from this game.
      */
     @Test
     public void testPlayRound() throws IOException, InvalidMapSyntaxException, BrainParser.InvalidBrainSyntaxException {
@@ -1350,8 +1337,10 @@ public class AntGameModelTest {
         String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
         brain = bpr.parseBrain(brainStringArray);
         AntGameModel instance = new AntGameModel(cellMap, brain, brain);
-        instance.playRound();
+        instance.populateAntHills();
+        instance.playGame(1001);
         String[] expResult = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\testDump\\dump0-1000.0-1000");
         String[] result = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\dump");
+        assertArrayEquals(expResult, result);
     }    
 }
