@@ -19,7 +19,9 @@ import static group20.Instructions.Sense.SenseDir.*;
 import group20.Instructions.Turn;
 import static group20.Instructions.Turn.LeftOrRight.*;
 import static group20.antgame.Ant.Colour.*;
+import group20.exceptions.InvalidMapSyntaxException;
 import group20.exceptions.InvalidStateException;
+import java.io.IOException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -40,6 +42,8 @@ public class AntGameModelTest {
     Pos centre;
     Pos redAntPos;
     Pos blackAntPos;
+    Map mapClass;
+    MapParser mapParser;
     
     public AntGameModelTest() {
         testMap = new MapCell[5][5];
@@ -1335,11 +1339,19 @@ public class AntGameModelTest {
      * Test of playRound method, of class AntGameModel.
      */
     @Test
-    public void testPlayRound() {
+    public void testPlayRound() throws IOException, InvalidMapSyntaxException, BrainParser.InvalidBrainSyntaxException {
         System.out.println("playRound");
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        mapParser = new MapParser();
+        String[] mapStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\tiny.world");
+        char[][] charMap = mapParser.parseMap(mapStringArray, false);
+        mapClass = new Map(charMap);
+        MapCell[][] cellMap = mapClass.getCellMap();
+        BrainParserRob bpr = new BrainParserRob();
+        String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
+        brain = bpr.parseBrain(brainStringArray);
+        AntGameModel instance = new AntGameModel(cellMap, brain, brain);
         instance.playRound();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String[] expResult = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\testDump\\dump0-1000.0-1000");
+        String[] result = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\dump");
     }    
 }

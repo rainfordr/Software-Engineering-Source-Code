@@ -319,7 +319,7 @@ public class BrainParser {
 
     }
 
-    private static class InvalidBrainSyntaxException extends Exception {
+    public static class InvalidBrainSyntaxException extends Exception {
 
         public InvalidBrainSyntaxException(String str) {
             super(str);
