@@ -9,8 +9,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -62,5 +65,20 @@ public class Utils {
             }
         }
         return lines.toArray(new String[lines.size()]);
+    }
+    
+    public static void writeToFile(String fileString, String filePath){
+
+        try {
+            Writer output = null;
+            File file = new File(filePath);
+            output = new BufferedWriter(new FileWriter(file));
+            output.write(fileString);
+            output.close();
+            System.out.println("file written");       
+        } catch (IOException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not write file");
+        }
     }
 }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package group20.antgame;
 
 import com.sun.org.apache.bcel.internal.generic.D2F;
@@ -27,11 +23,8 @@ import java.util.regex.*;
  * @author owner
  */
 public class BrainParser {
-    
-    public ArrayList<String> instructionsString = new ArrayList<>();
 
-    static String conditionsRegex = "(Foe|FoeHome|FoeMarker|FoeWithFood|Food|Friend|FriendWithFood|Home|Marker(i)|Rock)";
-    String data;
+    static String conditionsRegex = ("(Foe|FoeHome|FoeMarker|FoeWithFood|Food|Friend|FriendWithFood|Home|Marker(i)|Rock)");
 
     public static enum instructionType {
 
@@ -143,13 +136,10 @@ public class BrainParser {
                 returnedInstruction = new Unmark(Mark.Marker.MARKER5, stateNum);
                 break;
         }
-        
-        data = "Unmark " + " " + returnedInstruction.toString();
 
         return returnedInstruction;
 
     }
-
     /**
      *
      * @param brain the text/string of the brain file
@@ -199,7 +189,6 @@ public class BrainParser {
                     int st1 = Integer.parseInt(s);
                     int st2 = Integer.parseInt(s2);
                     instructions.add(new PickUp(st1, st2));
-                    data = 
 
                 }
             } else if (m.group(instructionType.Drop.name()) != null) {
@@ -269,7 +258,6 @@ public class BrainParser {
                 }
 
             } else if (m.group(instructionType.Unmark.name()) != null) {
-                Unmark um = null;
                 String contents = m.group();
                 String regex = instructionType.Unmark.pattern;
                 Matcher m2 = Pattern.compile(regex).matcher(contents);
@@ -283,8 +271,6 @@ public class BrainParser {
                 }
 
             } else if (m.group(instructionType.Sense.name()) != null) {
-
-                Sense sense = null;
                 String contents = m.group();
                 String regex = instructionType.Sense.pattern;
                 Matcher m2 = Pattern.compile(regex).matcher(contents);
@@ -302,24 +288,15 @@ public class BrainParser {
                     //(Here|Ahead|LeftAhead|RightAhead)
                     switch (senseDir) {
                         case "Here":
-                            sense = new Sense(Sense.SenseDir.HERE, st1, st2, con);
-                            break;
+                            instructions.add(new Sense(Sense.SenseDir.HERE, st1, st2, con));
                         case "Ahead":
-                            sense = new Sense(Sense.SenseDir.AHEAD, st1, st2, con);
-                            break;
+                            instructions.add(new Sense(Sense.SenseDir.AHEAD, st1, st2, con));
                         case "LeftAhead":
-                            sense = new Sense(Sense.SenseDir.LEFT_AHEAD, st1, st2, con);
-                            break;
+                            instructions.add(new Sense(Sense.SenseDir.LEFT_AHEAD, st1, st2, con) );
                         case "RightAhead":
-                            sense = new Sense(Sense.SenseDir.RIGHT_AHEAD, st1, st2, con);
-                            break;
+                            instructions.add(new Sense(Sense.SenseDir.RIGHT_AHEAD, st1, st2, con));
                     }
-
                 }
-                instructions.add(sense);
-                Condition con = sense.getCondition();
-                data = "Sense " + (String) sense.getSenseDir().name() + " " + Integer.toString(sense.getSt1()) + " " + Integer.toString(sense.getSt2()) + " " + con.classNameToString();
-                instructionsString.add(data);
 
             } else {
                 throw new InvalidBrainSyntaxException("Invalid Antbrain Syntax!!");
@@ -332,10 +309,11 @@ public class BrainParser {
 
     }
 
-    private static class InvalidBrainSyntaxException extends Exception {
+    public static class InvalidBrainSyntaxException extends Exception {
 
         public InvalidBrainSyntaxException(String str) {
             super(str);
         }
     }
 }
+

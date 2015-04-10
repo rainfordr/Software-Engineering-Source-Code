@@ -15,6 +15,7 @@ import java.math.MathContext;
  * @author owner
  */
 public class RandomGenerator {
+    int timesCalled = 0;
     private BigDecimal S;
     private BigDecimal X;
     private BigDecimal sMult;
@@ -24,6 +25,7 @@ public class RandomGenerator {
     private MathContext mc;
     
     public RandomGenerator(int seed){
+        timesCalled++;
         S = new BigDecimal(seed);
         sMult = new BigDecimal(22695477.0);
         one = new BigDecimal(1);

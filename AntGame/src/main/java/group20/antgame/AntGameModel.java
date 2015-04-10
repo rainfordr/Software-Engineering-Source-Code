@@ -26,21 +26,17 @@ public class AntGameModel {
     private Instruction[] redBrain;
     private Instruction[] blackBrain;
     private HashMap<Integer, Ant> ants;
-    private BrainParser brainParser;
-    private MapParser mapParser;
-    
+    private int randomSeed = 12345;
    private RandomGenerator rand;
 
     
-    public AntGameModel(MapCell[][] map){
+    public AntGameModel(MapCell[][] map, Instruction[] redBrain, Instruction[] blackBrain){
         this.map = map;
-        redBrain = new Instruction[1000];
-        blackBrain = new Instruction[1000];
-        brainParser = new BrainParser();
-        mapParser = new MapParser();
+        this.redBrain = redBrain;
+        this.blackBrain = blackBrain;
         ants = new HashMap<>();
         
-        rand = new RandomGenerator(12345);
+        rand = new RandomGenerator(randomSeed);
     }
     
     public Pos adjacentCell(Pos p, Dir d){
@@ -130,7 +126,13 @@ public class AntGameModel {
     }
     
     public int resting(Ant a){
+        try{
+            return a.resting();
+        }catch(NullPointerException ex){
+            boolean test = true;
+        }
         return a.resting();
+
     }
     
     public Dir direction(Ant a){
@@ -166,10 +168,12 @@ public class AntGameModel {
     }
     
     public void setAntAt(Pos p, Ant a){
+        a.setPosition(p);
         mapCell(p).putAnt(a);
     }
     
     public void clearAntAt(Pos p){
+        antAt(p).setPosition(null);
         mapCell(p).clearAnt();
     }
     
@@ -269,7 +273,8 @@ public class AntGameModel {
      public int adjacentAnts(Pos p, Colour c){
          int adjAnts = 0;
          for(Dir dir: Dir.values){
-             if(someAntIsAt(p) && colour(antAt(p)) == c){
+             Pos adj = adjacentCell(p, dir);
+             if(someAntIsAt(adj) && colour(antAt(adj)) == c){
                  adjAnts++;
              }
          }
@@ -402,6 +407,15 @@ public class AntGameModel {
          }
      }
      
+     public void playGame(int Rounds){
+         String dump = "random seed: " + randomSeed + "\n";
+         for(int turn = 0; turn < Rounds; turn ++){
+             playRound();
+             dump += dumpRound(turn);
+         }
+         Utils.writeToFile(dump, "C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\dump");
+     }
+     
      public void populateAntHills(){
          int mapWidth = map[0].length;
          int mapHeight = map.length;
@@ -413,7 +427,7 @@ public class AntGameModel {
                  if(cell.isAntHillCell(RED)){
                      Ant a = new Ant(RED, id, p);
                      ants.put(id, a);
-                     cell.putAnt(a);
+                     setAntAt(p, a);
                      id++;
                  }
                  else if(cell.isAntHillCell(BLACK)){
@@ -424,5 +438,67 @@ public class AntGameModel {
                  }
              }
          }
+     }
+     
+     private String dumpRound(int turn){
+         String dump = "\n" + "After round " + turn + "...\n";
+         for(int y = 0; y < map.length; y++){
+             for(int x = 0; x < map[0].length; x++){
+                 Pos p = new Pos(x,y);
+                 MapCell mc = mapCell(p);
+                 dump += "Cell (" + x + ", " + y + "): ";
+                 if(rocky(p)){
+                     dump += "rock";
+                 }
+                 else {
+                    if(foodAt(p) != 0){
+                    dump += foodAt(p) + " food; ";
+                    }
+                    if(antHillAt(p, RED)){
+                        dump += "red hill; ";
+                    }
+                    else if(antHillAt(p, BLACK)){
+                        dump += "black hill; ";
+                    }
+                    if (checkAnyMarkerAt(p, RED)){
+                        dump += "red marks: ";
+                        for(Marker marker: Marker.values()){
+                            if(checkMarkerAt(p, RED, marker)){
+                                dump += marker.ordinal();
+                            }
+                            dump += "; ";
+                        }
+                    }
+                    if (checkAnyMarkerAt(p, BLACK)){
+                        dump += "black marks: ";
+                        for(Marker marker: Marker.values()){
+                            if(checkMarkerAt(p, BLACK, marker)){
+                                dump += marker.ordinal();
+                            }
+                            dump += "; ";
+                        }
+                    }
+                    if (someAntIsAt(p)){
+                        Ant a = antAt(p);
+                        int food = 0;
+                        if(a.hasFood()){
+                            food = 1;
+                        }
+                        String colour;
+                        if(colour(a) == RED){
+                            colour = "red";
+                        }
+                        else{
+                            colour = "black";
+                        }
+                        dump += colour + " ant of id " + a.getID() + ", dir " + a.direction().ordinal() + ", food " + food + ", state " + a.state() + ", resting " + a.resting();
+                    }
+                    
+                 }
+                 
+             }
+            dump += "\n";  
+         }
+         return dump;
      }
 }
