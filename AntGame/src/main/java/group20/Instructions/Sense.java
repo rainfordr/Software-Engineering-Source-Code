@@ -13,10 +13,10 @@ import group20.Conditions.Condition;
  */
 public class Sense implements Instruction{
     
-    private final SenseDir senseDir;
-    private final int st1;
-    private final int st2;
-    private final Condition condition;
+    public static SenseDir senseDir;
+    public static int st1;
+    public static int st2;
+    public static Condition condition;
     public Sense(SenseDir sensedir, int st1, int st2, Condition condition){
         this.senseDir = sensedir;
         this.st1 = st1;

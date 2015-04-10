@@ -25,13 +25,13 @@ public class RandomGenerator {
     private MathContext mc;
     
     public RandomGenerator(int seed){
-        timesCalled++;
         S = new BigDecimal(seed);
         sMult = new BigDecimal(22695477.0);
         one = new BigDecimal(1);
         sDiv = new BigDecimal(65536.0);
         xMod = new BigDecimal(16384.0);
-        mc = MathContext.UNLIMITED;
+        //mc = MathContext.UNLIMITED;
+        mc = new MathContext(775);
         
         for(int i = 0; i < 3; i++){
             S = S.multiply(sMult, mc);
@@ -40,6 +40,7 @@ public class RandomGenerator {
     }
     
     public int randomInt(int n){
+        timesCalled++;
         BigDecimal N = new BigDecimal(n);
         int result;
         S = S.multiply(sMult);
@@ -49,4 +50,5 @@ public class RandomGenerator {
         result = X.toBigInteger().intValue();
         return result;
     }
+
 }
