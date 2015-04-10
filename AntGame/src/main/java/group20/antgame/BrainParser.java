@@ -1,4 +1,3 @@
-
 package group20.antgame;
 
 import com.sun.org.apache.bcel.internal.generic.D2F;
@@ -140,6 +139,7 @@ public class BrainParser {
         return returnedInstruction;
 
     }
+
     /**
      *
      * @param brain the text/string of the brain file
@@ -289,13 +289,18 @@ public class BrainParser {
                     switch (senseDir) {
                         case "Here":
                             instructions.add(new Sense(Sense.SenseDir.HERE, st1, st2, con));
+                            break;
                         case "Ahead":
                             instructions.add(new Sense(Sense.SenseDir.AHEAD, st1, st2, con));
+                            break;
                         case "LeftAhead":
-                            instructions.add(new Sense(Sense.SenseDir.LEFT_AHEAD, st1, st2, con) );
+                            instructions.add(new Sense(Sense.SenseDir.LEFT_AHEAD, st1, st2, con));
+                            break;
                         case "RightAhead":
                             instructions.add(new Sense(Sense.SenseDir.RIGHT_AHEAD, st1, st2, con));
+                            break;
                     }
+
                 }
 
             } else {
@@ -304,7 +309,6 @@ public class BrainParser {
 
         }
         Instruction[] instructionArray = new Instruction[instructions.size()];
-
         return instructions.toArray(instructionArray);
 
     }
@@ -316,4 +320,3 @@ public class BrainParser {
         }
     }
 }
-
