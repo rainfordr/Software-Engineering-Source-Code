@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package group20.antgame;
 
 import com.sun.org.apache.bcel.internal.generic.D2F;
@@ -144,10 +139,6 @@ public class BrainParser {
         return returnedInstruction;
 
     }
-    
-
-    
-    
 
     /**
      *
@@ -292,20 +283,24 @@ public class BrainParser {
                     String s2 = m2.group(3);
                     int st2 = Integer.parseInt(s2);
                     String cond = m2.group(4);
-                    String markerNum = m2.group(5);
                     Condition con = parseCondition(cond);
 
                     //(Here|Ahead|LeftAhead|RightAhead)
                     switch (senseDir) {
                         case "Here":
                             instructions.add(new Sense(Sense.SenseDir.HERE, st1, st2, con));
+                            break;
                         case "Ahead":
                             instructions.add(new Sense(Sense.SenseDir.AHEAD, st1, st2, con));
+                            break;
                         case "LeftAhead":
-                            instructions.add(new Sense(Sense.SenseDir.LEFT_AHEAD, st1, st2, con) );
+                            instructions.add(new Sense(Sense.SenseDir.LEFT_AHEAD, st1, st2, con));
+                            break;
                         case "RightAhead":
                             instructions.add(new Sense(Sense.SenseDir.RIGHT_AHEAD, st1, st2, con));
+                            break;
                     }
+
                 }
 
             } else {
@@ -314,7 +309,6 @@ public class BrainParser {
 
         }
         Instruction[] instructionArray = new Instruction[instructions.size()];
-
         return instructions.toArray(instructionArray);
 
     }
