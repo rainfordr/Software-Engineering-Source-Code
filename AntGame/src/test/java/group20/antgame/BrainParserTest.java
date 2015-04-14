@@ -6,7 +6,22 @@
 package group20.antgame;
 
 import group20.Conditions.Condition;
+import group20.Conditions.Food;
+import group20.Conditions.Friend;
+import group20.Conditions.Home;
+import group20.Instructions.Drop;
+import group20.Instructions.Flip;
 import group20.Instructions.Instruction;
+import group20.Instructions.Mark;
+import static group20.Instructions.Mark.Marker.*;
+import group20.Instructions.Move;
+import group20.Instructions.PickUp;
+import group20.Instructions.Sense;
+import static group20.Instructions.Sense.SenseDir.*;
+import group20.Instructions.Turn;
+import static group20.Instructions.Turn.LeftOrRight.LEFT;
+import group20.Instructions.Unmark;
+import static group20.antgame.BrainParser.instructionType.Unmark;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,8 +34,33 @@ import static org.junit.Assert.*;
  * @author owner
  */
 public class BrainParserTest {
+    Instruction[] expParseResult = new Instruction[11];
+    Instruction flip, turn, pickUp, drop, move, unMark, mark, senseLAM1,senseRAHome, senseHereFood, senseAheadFriend;
     
     public BrainParserTest() {
+        flip = new Flip(10, 6, 1);
+        turn = new Turn(LEFT, 1);
+        pickUp = new PickUp(20, 2);
+        drop = new Drop(2);
+        move = new Move(0, 28);
+        unMark = new Unmark(MARKER5,0);
+        mark = new Mark(MARKER2,3);
+        senseLAM1 = new Sense(LEFT_AHEAD, 3, 78, MARKER1);
+        senseRAHome = new Sense(RIGHT_AHEAD, 4, 77, new Home());
+        senseHereFood = new Sense(HERE, 5, 76, new Food());
+        senseAheadFriend = new Sense(AHEAD, 6, 75, new Friend());
+        
+        expParseResult[0] = flip;
+        expParseResult[1] = turn;
+        expParseResult[2] = pickUp;
+        expParseResult[3] = drop;
+        expParseResult[4] = move;
+        expParseResult[5] = unMark;
+        expParseResult[6] = mark;
+        expParseResult[7] = senseLAM1;
+        expParseResult[8] = senseRAHome;
+        expParseResult[9] = senseHereFood;
+        expParseResult[10] = senseAheadFriend;
     }
     
     @BeforeClass
@@ -92,13 +132,11 @@ public class BrainParserTest {
     @Test
     public void testParseBrain() throws Exception {
         System.out.println("parseBrain");
-        String[] brainInsructions = null;
+        String[] brainInsructions = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\parserTestBrain.ant");
         BrainParser instance = new BrainParser();
-        Instruction[] expResult = null;
+        Instruction[] expResult = expParseResult;
         Instruction[] result = instance.parseBrain(brainInsructions);
         assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

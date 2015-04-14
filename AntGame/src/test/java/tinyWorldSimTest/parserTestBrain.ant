@@ -1,0 +1,11 @@
+Flip 10 6 1
+Turn Left 1
+PickUp 20 2
+Drop 2
+Move 0 28
+Unmark 5 0
+Mark 2 3
+Sense LeftAhead 3 78 Marker 1
+Sense RightAhead 4 77 Home
+Sense Here 5 76 Food
+Sense Ahead 6 75 Friend
