@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: group20.antgame.AntGameModelTest
 -------------------------------------------------------------------------------
-Tests run: 76, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 16.343 sec <<< FAILURE!
-testPlayRound(group20.antgame.AntGameModelTest)  Time elapsed: 15.748 sec  <<< FAILURE!
+Tests run: 76, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 16.02 sec <<< FAILURE!
+testPlayRound(group20.antgame.AntGameModelTest)  Time elapsed: 15.363 sec  <<< FAILURE!
 arrays first differed at element [27]; expected:<...ir 0, food 0, state [0], resting 0> but was:<...ir 0, food 0, state [1], resting 0>
 	at org.junit.internal.ComparisonCriteria.arrayEquals(ComparisonCriteria.java:52)
 	at org.junit.Assert.internalArrayEquals(Assert.java:416)

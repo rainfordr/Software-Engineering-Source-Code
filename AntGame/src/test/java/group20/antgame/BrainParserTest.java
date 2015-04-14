@@ -1,61 +1,104 @@
-package group20.antgame;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package group20.antgame;
 
-import group20.Conditions.Food;
-import group20.Instructions.*;
+import group20.Conditions.Condition;
+import group20.Instructions.Instruction;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import group20.antgame.*;
-import java.util.ArrayList;
 
 /**
  *
- * @author Patrick
+ * @author owner
  */
 public class BrainParserTest {
-
-    BrainParser bp = new BrainParser();
-    ArrayList<String> testInstructions = new ArrayList<>();
-    //create new any brain string here to test on
-
-
-    /**
-     *
-     * @throws BrainParser.InvalidBrainSyntaxException
-     */
-    @Test
-    public void TestParseAllInstructions() throws Exception {
-        
-        
-        testInstructions.add("Sense LeftAhead 0 85 FoeHome");
-
-        
-        String [] instructions = new String[testInstructions.size()];
-        String [] parsing = testInstructions.toArray(instructions);
-        
-        
-
-        Instruction[] result = new Instruction[bp.parseBrain(parsing).length];
-        System.arraycopy(bp.parseBrain(instructions), 0, result, 0, bp.parseBrain(instructions).length);
-        
-        for (int i = 0; i < result.length; i++) {
-            System.out.println(result[i]);
-            
-        }
+    
+    public BrainParserTest() {
+    }
+    
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    
+    @Before
+    public void setUp() {
+    }
+    
+    @After
+    public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    /**
+     * Test of parseMarker method, of class BrainParser.
+     */
+    @Test
+    public void testParseMarker() {
+        System.out.println("parseMarker");
+        int markerNum = 0;
+        int stateNum = 0;
+        BrainParser instance = new BrainParser();
+        Instruction expResult = null;
+        Instruction result = instance.parseMarker(markerNum, stateNum);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of parseCondition method, of class BrainParser.
+     */
+    @Test
+    public void testParseCondition() {
+        System.out.println("parseCondition");
+        String condition = "";
+        BrainParser instance = new BrainParser();
+        Condition expResult = null;
+        Condition result = instance.parseCondition(condition);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of parseUnmark method, of class BrainParser.
+     */
+    @Test
+    public void testParseUnmark() {
+        System.out.println("parseUnmark");
+        int markerNum = 0;
+        int stateNum = 0;
+        BrainParser instance = new BrainParser();
+        Instruction expResult = null;
+        Instruction result = instance.parseUnmark(markerNum, stateNum);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of parseBrain method, of class BrainParser.
+     */
+    @Test
+    public void testParseBrain() throws Exception {
+        System.out.println("parseBrain");
+        String[] brainInsructions = null;
+        BrainParser instance = new BrainParser();
+        Instruction[] expResult = null;
+        Instruction[] result = instance.parseBrain(brainInsructions);
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+    
 }
