@@ -252,11 +252,9 @@ public class AntGameModel {
         else if(cond instanceof Food){
             return foodAt(p) > 0;
         }
-        else if(cond instanceof Marked){ // possibly use marked class instead of instanceof Marker, I was trying to be clever and made Marker implement condition.
-            
-            Marked m = (Marked)cond;
-            Marker markerNum = m.marker;
-            return checkMarkerAt(p, c, markerNum);// possibly will be wrong marker enum after casting. If so will use Marked class here and get correct m from that.
+        else if(cond instanceof Marker){
+            Marker m = (Marker)cond;
+            return checkMarkerAt(p, c, m);
         }
         else if(cond instanceof FoeMarker){
             return checkAnyMarkerAt(p, otherColour(c));
