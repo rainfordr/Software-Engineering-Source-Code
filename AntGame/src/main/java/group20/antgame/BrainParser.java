@@ -10,9 +10,9 @@ import group20.Conditions.Food;
 import group20.Conditions.Friend;
 import group20.Conditions.FriendWithFood;
 import group20.Conditions.Home;
-import group20.Conditions.Marked;
 import group20.Conditions.Rock;
 import group20.Instructions.*;
+import group20.Instructions.Mark.Marker;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.*;
@@ -47,30 +47,32 @@ public class BrainParser {
 
     public Instruction parseMarker(int markerNum, int stateNum) {
 
-        Instruction returnedInstruction = null;
-
-        switch (markerNum) {
-            case 0:
-                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER0, stateNum);
-                break;
-            case 1:
-                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER1, stateNum);
-                break;
-            case 2:
-                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER2, stateNum);
-                break;
-            case 3:
-                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER3, stateNum);
-                break;
-            case 4:
-                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER4, stateNum);
-                break;
-            case 5:
-                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER5, stateNum);
-                break;
-        }
-
-        return returnedInstruction;
+        
+        Marker marker = Marker.values()[markerNum];
+        return new Mark(marker, stateNum);
+//        Instruction returnedInstruction = null;
+//        switch (markerNum) {
+//            case 0:
+//                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER0, stateNum);
+//                break;
+//            case 1:
+//                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER1, stateNum);
+//                break;
+//            case 2:
+//                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER2, stateNum);
+//                break;
+//            case 3:
+//                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER3, stateNum);
+//                break;
+//            case 4:
+//                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER4, stateNum);
+//                break;
+//            case 5:
+//                returnedInstruction = new Mark(group20.Instructions.Mark.Marker.MARKER5, stateNum);
+//                break;
+//        }
+//
+//        return returnedInstruction;
 
     }
 
@@ -102,7 +104,7 @@ public class BrainParser {
             case "Home":
                 con = new Home();
                 break;
-            case "Marked":
+            case "Marker":
                 throw new UnsupportedOperationException("Not implemented yet");
             case "Rock":
                 con = new Rock();
@@ -112,31 +114,33 @@ public class BrainParser {
     }
 
     public Instruction parseUnmark(int markerNum, int stateNum) {
+        
+        return new Unmark(Mark.Marker.values()[markerNum], stateNum);
 
-        Instruction returnedInstruction = null;
-
-        switch (markerNum) {
-            case 0:
-                returnedInstruction = new Unmark(Mark.Marker.MARKER0, stateNum);
-                break;
-            case 1:
-                returnedInstruction = new Unmark(Mark.Marker.MARKER1, stateNum);
-                break;
-            case 2:
-                returnedInstruction = new Unmark(Mark.Marker.MARKER2, stateNum);
-                break;
-            case 3:
-                returnedInstruction = new Unmark(Mark.Marker.MARKER3, stateNum);
-                break;
-            case 4:
-                returnedInstruction = new Unmark(Mark.Marker.MARKER4, stateNum);
-                break;
-            case 5:
-                returnedInstruction = new Unmark(Mark.Marker.MARKER5, stateNum);
-                break;
-        }
-
-        return returnedInstruction;
+//        Instruction returnedInstruction = null;
+//
+//        switch (markerNum) {
+//            case 0:
+//                returnedInstruction = new Unmark(Mark.Marker.MARKER0, stateNum);
+//                break;
+//            case 1:
+//                returnedInstruction = new Unmark(Mark.Marker.MARKER1, stateNum);
+//                break;
+//            case 2:
+//                returnedInstruction = new Unmark(Mark.Marker.MARKER2, stateNum);
+//                break;
+//            case 3:
+//                returnedInstruction = new Unmark(Mark.Marker.MARKER3, stateNum);
+//                break;
+//            case 4:
+//                returnedInstruction = new Unmark(Mark.Marker.MARKER4, stateNum);
+//                break;
+//            case 5:
+//                returnedInstruction = new Unmark(Mark.Marker.MARKER5, stateNum);
+//                break;
+//        }
+//
+//        return returnedInstruction;
 
     }
 

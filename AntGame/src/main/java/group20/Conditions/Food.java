@@ -12,5 +12,14 @@ import group20.Conditions.*;
  * @author owner
  */
 public class Food implements Condition{
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -13,6 +13,7 @@ import group20.Instructions.Turn.LeftOrRight;
 import static group20.Instructions.Turn.LeftOrRight.*;
 import group20.antgame.Ant.Colour;
 import static group20.antgame.Ant.Colour.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,8 +27,9 @@ public class AntGameModel {
     private Instruction[] redBrain;
     private Instruction[] blackBrain;
     private HashMap<Integer, Ant> ants;
+    private ArrayList<Integer> deadAnts;
     private int randomSeed = 12345;
-   private RandomGenerator rand;
+   private RandNumGen2 rand;
 
     
     public AntGameModel(MapCell[][] map, Instruction[] redBrain, Instruction[] blackBrain){
@@ -35,8 +37,8 @@ public class AntGameModel {
         this.redBrain = redBrain;
         this.blackBrain = blackBrain;
         ants = new HashMap<>();
-        
-        rand = new RandomGenerator(randomSeed);
+        deadAnts = new ArrayList<>();
+        rand = new RandNumGen2(randomSeed);
     }
     
     public Pos adjacentCell(Pos p, Dir d){
@@ -178,7 +180,10 @@ public class AntGameModel {
     }
     
     public boolean antIsAlive(int id){
-        return ants.containsKey(id);
+        if(ants.get(id) == null){
+            return false;
+        }
+        return ants.get(id).isAlive();
     }
     
     public Pos findAnt(int id){
@@ -186,8 +191,11 @@ public class AntGameModel {
     }
     
     public void KillAntAt(Pos p){
-        ants.remove(mapCell(p).getAnt().getID());
+        Ant a = mapCell(p).getAnt();
+        int id = a.getID();
+        a.kill();
         clearAntAt(p);
+        deadAnts.add(id);
     }
     
     public void setMarkerAt(Pos p, Colour c, Marker m){
@@ -315,11 +323,11 @@ public class AntGameModel {
                  Instruction instruction = getInstruction(col, state);
                  if(instruction instanceof Sense){
                      Sense sense = (Sense)instruction;
-                     Pos pos2 = sensedCell(pos, ant.direction(), sense.getSenseDir());
-                         if (cellMatches(pos, col, sense.getCondition())) {
-                             setState(ant, sense.getSt1());
+                     Pos pos2 = sensedCell(pos, ant.direction(), sense.senseDir);
+                         if (cellMatches(pos, col, sense.condition)) {
+                             setState(ant, sense.st1);
                          } else {
-                             setState(ant, sense.getSt2());
+                             setState(ant, sense.st2);
                          }
                  }
                  else if(instruction instanceof Mark){
@@ -387,7 +395,7 @@ public class AntGameModel {
                      int st1 = flip.st1;
                      int st2 = flip.st2;
                      
-                     int randInt = rand.randomInt(randLimit);
+                     int randInt = rand.randInt(randLimit);
                      if (randInt == 0){
                          setState(ant, st1);
                      }
@@ -401,10 +409,19 @@ public class AntGameModel {
              }
          }
      }
+     
+     private void removeDeadAnts(){
+         for(int id: deadAnts){
+             ants.remove(id);
+         }
+         deadAnts = new ArrayList<>();
+     }
+     
      public void playRound(){
          for(int id: ants.keySet()){
              step(id);
          }
+         removeDeadAnts();
      }
      
      public void playGame(int Rounds){
@@ -446,7 +463,7 @@ public class AntGameModel {
              for(int x = 0; x < map[0].length; x++){
                  Pos p = new Pos(x,y);
                  MapCell mc = mapCell(p);
-                 dump += "Cell (" + x + ", " + y + "): ";
+                 dump += "cell (" + x + ", " + y + "): ";
                  if(rocky(p)){
                      dump += "rock";
                  }
@@ -495,9 +512,8 @@ public class AntGameModel {
                     }
                     
                  }
-                 
+                 dump += "\n";
              }
-            dump += "\n";  
          }
          return dump;
      }

@@ -8,6 +8,7 @@ package group20.antgame;
 import group20.exceptions.InvalidStateException;
 import group20.Instructions.Dir;
 import static group20.Instructions.Dir.*;
+import java.util.Objects;
 
 /**
  *
@@ -20,7 +21,8 @@ public class Ant {
     private int resting;
     private Dir direction;
     private boolean hasFood;
-    private Pos position;    
+    private Pos position;
+    private boolean isAlive = true;
     
     public Ant(Colour colour, int id, Pos position){
         this.colour = colour;
@@ -92,4 +94,39 @@ public class Ant {
             return RED;
         }
     }
+    
+    public boolean isAlive(){
+        return isAlive;
+    }
+    
+    public void kill(){
+        isAlive = false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + this.id;
+        hash = 37 * hash + Objects.hashCode(this.colour);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ant other = (Ant) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.colour != other.colour) {
+            return false;
+        }
+        return true;
+    }
+    
 }
