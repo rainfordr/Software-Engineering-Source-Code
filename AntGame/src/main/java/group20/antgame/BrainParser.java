@@ -23,19 +23,22 @@ import java.util.regex.*;
  */
 public class BrainParser {
 
-    static String conditionsRegex = ("(Foe|FoeHome|FoeMarker|FoeWithFood|Food|Friend|FriendWithFood|Home|Marker(i)|Rock)");
+    static String conditionsRegex = ("(FoeHome|FoeMarker|FoeWithFood|Foe|FriendWithFood|Friend|Food|Home|Marker ([0-9]*)|Rock)");
+    String [] instructionsArray;
+
 
     public static enum instructionType {
 
-        //HERE, AHEAD, LEFT_AHEAD, RIGHT_AHEAD;
         Move("Move ([0-9]*) ([0-9]*)"),
-        PickUp("pickUp ([0-9]*) ([0-9]*)"),
+        PickUp("PickUp ([0-9]*) ([0-9]*)"),
         Drop("Drop ([0-9]*)"),
         Turn("Turn (Left|Right) ([0-9]*)"),
         Flip("Flip ([0-9]*) ([0-9]*) ([0-9]*)"),
         Mark("Mark ([0-9]*) ([0-9]*)"),
         Unmark("Unmark ([0-9]*) ([0-9]*)"),
-        Sense("Sense (Here|Ahead|LeftAhead|RightAhead) ([0-9]*) ([0-9*]) " + conditionsRegex);
+        Sense("Sense (Here|Ahead|LeftAhead|RightAhead) ([0-9]*) ([0-9]*) " + conditionsRegex),
+        //Anything else is invalid
+        Exceptions(".+");
 
         public final String pattern;
 
@@ -102,8 +105,24 @@ public class BrainParser {
             case "Home":
                 con = new Home();
                 break;
-            case "Marked":
-                throw new UnsupportedOperationException("Not implemented yet");
+            case "Marked 0":
+                con = new Marked(Mark.Marker.MARKER0);
+                break;
+            case "Marked 1":
+                con = new Marked(Mark.Marker.MARKER1);
+                break;
+            case "Marked 2":
+                con = new Marked(Mark.Marker.MARKER2);
+                break;
+            case "Marked 3":
+                con = new Marked(Mark.Marker.MARKER3);
+                break;
+            case "Marked 4":
+                con = new Marked(Mark.Marker.MARKER4);
+                break;
+            case "Marked 5":
+                con = new Marked(Mark.Marker.MARKER5);
+                break;
             case "Rock":
                 con = new Rock();
 
@@ -146,7 +165,13 @@ public class BrainParser {
      * @return the fully initialised brain Instruction[]
      * @throws InvalidBrainSyntaxException if brain not correct syntax
      */
-    public Instruction[] parseBrain(String brain) throws InvalidBrainSyntaxException {
+    public Instruction[] parseBrain(String [] brainInsructions) throws InvalidBrainSyntaxException {
+        
+        String brain = "";
+        
+        for (int i = 0; i < brainInsructions.length; i++) {
+            brain = brain + brainInsructions[i];
+        }
 
         //instructions to be returned
         ArrayList<Instruction> instructions = new ArrayList<>();
@@ -158,8 +183,14 @@ public class BrainParser {
             PatternsBuffer.append(String.format("|(?<%s>%s)", type.name(), type.pattern));
         }
         Pattern tokenPatterns = Pattern.compile(new String(PatternsBuffer.substring(1)));
+        
+        if (brain == null){
+            throw new InvalidBrainSyntaxException("No brain passed to parser");  
+        }
 
         Matcher m = tokenPatterns.matcher(brain);
+        
+        
 
         while (m.find()) {
             if (m.group(instructionType.Move.name()) != null) {
@@ -303,7 +334,7 @@ public class BrainParser {
 
                 }
 
-            } else {
+            } else if (m.group(instructionType.Exceptions.name())!=null) {
                 throw new InvalidBrainSyntaxException("Invalid Antbrain Syntax!!");
             }
 

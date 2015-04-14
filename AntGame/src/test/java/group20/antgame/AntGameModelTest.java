@@ -1329,18 +1329,18 @@ public class AntGameModelTest {
     public void testPlayRound() throws IOException, InvalidMapSyntaxException, BrainParser.InvalidBrainSyntaxException {
         System.out.println("playRound");
         mapParser = new MapParser();
-        String[] mapStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\tiny.world");
+        String[] mapStringArray = Utils.fileToStringArray("C:\\Users\\Patrick\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\tiny.world");
         char[][] charMap = mapParser.parseMap(mapStringArray, false);
         mapClass = new Map(charMap);
         MapCell[][] cellMap = mapClass.getCellMap();
-        BrainParserRob bpr = new BrainParserRob();
-        String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
+        BrainParser bpr = new BrainParser();
+        String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\Patrick\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
         brain = bpr.parseBrain(brainStringArray);
         AntGameModel instance = new AntGameModel(cellMap, brain, brain);
         instance.populateAntHills();
         instance.playGame(1001);
-        String[] expResult = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\testDump\\dump0-1000.0-1000");
-        String[] result = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\dump");
+        String[] expResult = Utils.fileToStringArray("C:\\Users\\Patrick\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\testDump\\dump0-1000.0-1000");
+        String[] result = Utils.fileToStringArray("C:\\Users\\Patrick\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\dump");
         assertArrayEquals(expResult, result);
     }    
 }
