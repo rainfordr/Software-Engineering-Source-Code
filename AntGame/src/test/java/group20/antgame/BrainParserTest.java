@@ -35,25 +35,16 @@ public class BrainParserTest {
     @Test
     public void TestParseAllInstructions() throws Exception {
         
-        testInstructions.add("Sense Ahead 1 3 Food ");
-        testInstructions.add("pickUp 8 0 ");
-        testInstructions.add("Move 2 0 ");
-        testInstructions.add("Flip 3 4 5 ");
-        testInstructions.add("Drop 4");
-        testInstructions.add("Turn Left 0");
-        testInstructions.add("Turn Right 0");
-        testInstructions.add("Mark 0 1");
-        testInstructions.add("Unmark 0 1");
+        
+        testInstructions.add("Sense LeftAhead 0 85 FoeHome");
+
+        
+        String [] instructions = new String[testInstructions.size()];
+        String [] parsing = testInstructions.toArray(instructions);
         
         
-        String instructions = "";
 
-        for (int i = 0; i < testInstructions.size(); i++) {
-            String s = testInstructions.get(i);
-            instructions = instructions + s;
-        }
-
-        Instruction[] result = new Instruction[bp.parseBrain(instructions).length];
+        Instruction[] result = new Instruction[bp.parseBrain(parsing).length];
         System.arraycopy(bp.parseBrain(instructions), 0, result, 0, bp.parseBrain(instructions).length);
         
         for (int i = 0; i < result.length; i++) {
