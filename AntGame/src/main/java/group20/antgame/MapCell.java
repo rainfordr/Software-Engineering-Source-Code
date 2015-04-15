@@ -72,8 +72,12 @@ public class MapCell {
         ant = null;
     }
     
-    public Ant hasAnt(){
+    public Ant whichAnt(){
         return ant;
+    }
+    
+    public boolean hasAnt(){
+        return ant != null;
     }
     
     public Ant getAnt(){
