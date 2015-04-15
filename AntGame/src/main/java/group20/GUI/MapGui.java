@@ -167,7 +167,6 @@ public class MapGui extends JFrame {
     }
 
     public void drawMap() {
-        this.setVisible(false);
         remove(mapPanel);
         mapPanel = new JPanel();
         mapPanel.setLayout(null);
@@ -181,12 +180,28 @@ public class MapGui extends JFrame {
                     label.setBounds(x * 6 + offset, y * 5, 5, 6);
                 } else if (worldMap[x][y].isAntHillCell(Ant.Colour.RED)) {
                     JLabel label = new JLabel();
-                    label.setIcon(redIcon);
+                    if (worldMap[x][y].hasAnt() && worldMap[x][y].getAnt().colour() == Colour.RED) {
+                        //label.setIcon(redWRedIcon);
+                        label.setIcon(blackIcon);
+                    } else if (worldMap[x][y].hasAnt() && worldMap[x][y].getAnt().colour() == Colour.BLACK) {
+                        //label.setIcon(redWBlackIcon);
+                        label.setIcon(blackIcon);
+                    } else {
+                        label.setIcon(redIcon);
+                    }
                     mapPanel.add(label);
                     label.setBounds(x * 6 + offset, y * 5, 5, 6);
                 } else if (worldMap[x][y].isAntHillCell(Ant.Colour.BLACK)) {
                     JLabel label = new JLabel();
-                    label.setIcon(blackIcon);
+                    if (worldMap[x][y].hasAnt() && worldMap[x][y].getAnt().colour() == Colour.RED) {
+                        //label.setIcon(blackWRedIcon);
+                        label.setIcon(blackIcon);
+                    } else if (worldMap[x][y].hasAnt() && worldMap[x][y].getAnt().colour() == Colour.BLACK) {
+                        //label.setIcon(blackWBlackIcon);
+                        label.setIcon(blackIcon);
+                    } else {
+                        label.setIcon(blackIcon);
+                    }
                     mapPanel.add(label);
                     label.setBounds(x * 6 + offset, y * 5, 5, 6);  //label.setBounds(x * 4, y * 5 + offset, 6, 5);
                 } else if (worldMap[x][y].getFood() > 0) {
@@ -195,40 +210,17 @@ public class MapGui extends JFrame {
                     mapPanel.add(label);
                     label.setBounds(x * 6 + offset, y * 5, 5, 6);
                 } else if (!worldMap[x][y].isRocky()) {
-                    JLabel label = new JLabel();
-                    label.setIcon(clearIcon);
+                    JLabel label = new JLabel();if (worldMap[x][y].hasAnt() && worldMap[x][y].getAnt().colour() == Colour.RED) {
+                        //label.setIcon(clearWRedIcon);
+                        label.setIcon(blackIcon);
+                    } else if (worldMap[x][y].hasAnt() && worldMap[x][y].getAnt().colour() == Colour.BLACK) {
+                        //label.setIcon(clearWBlackIcon);
+                        label.setIcon(blackIcon);
+                    } else {
+                        label.setIcon(clearIcon);
+                    }
                     mapPanel.add(label);
                     label.setBounds(x * 6 + offset, y * 5, 5, 6);
-                } else if (!worldMap[x][y].isRocky() && worldMap[x][y].hasAnt().colour().BLACK == Colour.BLACK){
-                    JLabel label = new JLabel();
-                    label.setIcon(clearWBlackIcon);
-                    mapPanel.add(label);
-                    label.setBounds(x * 6 + offset, y * 5, 5, 6);
-                } else if (!worldMap[x][y].isRocky() && worldMap[x][y].hasAnt().colour().RED == Colour.RED){
-                    JLabel label = new JLabel();
-                    label.setIcon(clearWRedIcon);
-                    mapPanel.add(label);
-                    label.setBounds(x * 6 + offset, y * 5, 5, 6);                    
-                } else if (worldMap[x][y].isAntHillCell(Colour.RED) && worldMap[x][y].hasAnt().colour().BLACK == Colour.BLACK){
-                    JLabel label = new JLabel();
-                    label.setIcon(redWBlackIcon);
-                    mapPanel.add(label);
-                    label.setBounds(x * 6 + offset, y * 5, 5, 6);                    
-                } else if (worldMap[x][y].isAntHillCell(Colour.RED) && worldMap[x][y].hasAnt().colour().RED == Colour.RED){
-                    JLabel label = new JLabel();
-                    label.setIcon(redWRedIcon);
-                    mapPanel.add(label);
-                    label.setBounds(x * 6 + offset, y * 5, 5, 6);                       
-                } else if (worldMap[x][y].isAntHillCell(Colour.BLACK) && worldMap[x][y].hasAnt().colour().BLACK == Colour.BLACK){
-                    JLabel label = new JLabel();
-                    label.setIcon(blackWBlackIcon);
-                    mapPanel.add(label);
-                    label.setBounds(x * 6 + offset, y * 5, 5, 6);                       
-                } else if (worldMap[x][y].isAntHillCell(Colour.BLACK) && worldMap[x][y].hasAnt().colour().RED == Colour.RED){
-                    JLabel label = new JLabel();
-                    label.setIcon(blackWRedIcon);
-                    mapPanel.add(label);
-                    label.setBounds(x * 6 + offset, y * 5, 5, 6);                       
                 }
             }
             if (offset == 0) {
@@ -276,7 +268,9 @@ public class MapGui extends JFrame {
                     JOptionPane.showMessageDialog(gameMenu, "You must select two brains in the \"Brains\" submenu first.");
                 } else {
                     drawMap();
-                    controller.startGame();
+                    if (JOptionPane.showConfirmDialog(gameMenu, "Game will start with 300000 rounds. Ok?") == JOptionPane.YES_OPTION) {
+                        controller.startGame();
+                    }
                 }
             }
             if (e.getSource() == startTournamentButton) {
