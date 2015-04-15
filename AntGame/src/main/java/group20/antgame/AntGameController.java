@@ -8,7 +8,9 @@ package group20.antgame;
 import group20.GUI.MapGui;
 import group20.Instructions.Instruction;
 import group20.exceptions.InvalidMapSyntaxException;
+import group20.exceptions.InvalidWorldException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -31,38 +33,37 @@ public class AntGameController {
     private int[] playerScores;
     private File[] playerBrains;
     
+    public static void main(String args[]){
+        AntGameController controller = new AntGameController();
+        
+    }
     
     public AntGameController(){
+        try {
+            setCurrentMapFromFile("./src/main/resources/worlds/1.world");
+        } catch (IOException ex) {
+            mapGui.makeWarningWindow("File not found, please choose another file");
+        } catch (InvalidWorldException ex) {
+            mapGui.makeWarningWindow("Invalid world.");
+        }
         mapGui = new MapGui(this);
+        mapGui.loadImages();
+        mapGui.drawMap();
         brainParser = new BrainParser();
         mapParser = new MapParser();
         worldGen = new WorldGenerator();
-        try {
-            setCurrentMapFromFile("./src/main/resources/worlds/1.world");
-            mapGui.setMap();
-        } catch (IOException ex) {
-            mapGui.makeWarningWindow("File not found, please choose another file");
-        }
     }
     
     public void setAntBrains(File[] brains){
         playerBrains = brains;
     }
     
-    public void setCurrentMapFromFile(String filePath) throws IOException{
-        String[] mapArray = Utils.fileToStringArray(filePath);
-        char[][] charMap;
-        try {
-            charMap = mapParser.parseMap(mapArray, true);
-        mapChecker = new MapChecker(charMap);
-        if(!mapChecker.FinalCheck()){
-            mapGui.makeWarningWindow("This map does not meet competition standards, please choose another file");
-        }
-        currentMap = Map.getCellMap(charMap);
-        } catch (InvalidMapSyntaxException ex) {
-            String warning = ex.getMessage();
-            mapGui.makeWarningWindow("Invalid map syntax: " + warning +" Please choose another file");
-        }
+    public boolean parseBrain(){
+        return false;
+    }
+    
+    public void setCurrentMapFromFile(String filePath) throws IOException, FileNotFoundException, InvalidWorldException{
+        currentMap = new Map(new File(filePath)).getCellMap();
     }
     
     public void setRandomMap(){
@@ -72,5 +73,9 @@ public class AntGameController {
 
     public MapCell[][] getCurrentMap() {
         return currentMap;
+    }
+    
+    public void setCurrentMap(MapCell[][] map){
+        currentMap = map;
     }
 }
