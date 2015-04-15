@@ -24,6 +24,7 @@ import javax.swing.*;
  * @author bryan1495
  */
 public class MapGui extends JFrame {
+    AntGameController controller;
 
     Image clearImage;
     Image rockyImage;
@@ -36,7 +37,6 @@ public class MapGui extends JFrame {
     ImageIcon blackIcon;
     ImageIcon foodIcon;
     JPanel mapPanel = new JPanel();
-    Map mapClass;
     MapCell[][] worldMap;
     JMenuBar menuBar = new JMenuBar();
     JMenu gameMenu = new JMenu("Game");
@@ -76,13 +76,6 @@ public class MapGui extends JFrame {
         }
     }
 
-    public MapGui(Map worldMap) {
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        mapClass = worldMap;
-        windowSetup();
-        this.worldMap = worldMap.getMap();
-    }
-
     private void windowSetup() {
         gameMenu.add(setAntBrains);
         worldSubMenu.add(selectWorld);
@@ -112,10 +105,11 @@ public class MapGui extends JFrame {
         gameOptionsFrame.pack();
     }
 
-    public MapGui(MapCell[][] worldMap) {
+    public MapGui(AntGameController antGameController) {
+        controller = antGameController;
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         windowSetup();
-        this.worldMap = worldMap;
+        this.worldMap = antGameController.getCurrentMap();
     }
 
     public void drawMap() {
@@ -164,9 +158,15 @@ public class MapGui extends JFrame {
     }
 
     public static void main(String[] args) throws FileNotFoundException, InvalidWorldException {
-        MapGui m = new MapGui(new Map(new File("./src/main/resources/worlds/1.world")));
+        AntGameController agc = new AntGameController();
+        MapGui m = new MapGui(agc);
+        m.setMap();
         m.loadImages();
         m.drawMap();
+    }
+    
+    public void setMap(){
+        worldMap = controller.getCurrentMap();
     }
 
     class MapMouseListener implements MouseListener {
@@ -196,9 +196,8 @@ public class MapGui extends JFrame {
                 chooseBrain2.showOpenDialog(gameMenu);
             }
             if (e.getSource() == randomWorld) {
-                char[][] charMap = wg.getGeneratedCharMap();
-                Map mapClass = new Map(charMap);
-                worldMap = mapClass.getCellMap();
+                char[][] charMap = wg.generateMap();
+                worldMap = Map.getCellMap(charMap);
                 mapPanel = new JPanel();
                 drawMap();
             }
