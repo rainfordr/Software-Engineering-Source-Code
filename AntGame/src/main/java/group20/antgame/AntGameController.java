@@ -41,7 +41,7 @@ public class AntGameController {
             setCurrentMapFromFile("./src/main/resources/worlds/1.world");
             mapGui.setMap();
         } catch (IOException ex) {
-            //GUI.makeWarningWindow("File not found, please choose another file");
+            mapGui.makeWarningWindow("File not found, please choose another file");
         }
     }
     
