@@ -13,7 +13,6 @@ import group20.Instructions.Turn.LeftOrRight;
 import static group20.Instructions.Turn.LeftOrRight.*;
 import group20.antgame.Ant.Colour;
 import static group20.antgame.Ant.Colour.*;
-import static group20.antgame.AntGameModel.TestStatus.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,15 +35,9 @@ public class AntGameModel {
     private HashMap<Integer, Ant> ants;
     private ArrayList<Integer> deadAnts;
     private int randomSeed = 12345;
-   private RandNumGen2 rand;
-   private int numOfAnts;
-   private boolean test1000;
-
-   
-   public enum TestStatus{
-       TEST1000, TEST10000; 
-   }
-
+    private RandNumGen2 rand;
+    private int numOfAnts;
+    private boolean test1000;
     
     public AntGameModel( AntGameController agc, MapCell[][] map, Instruction[] redBrain, Instruction[] blackBrain){
         controller = agc;

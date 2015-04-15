@@ -22,8 +22,6 @@ import static group20.antgame.Ant.Colour.*;
 import group20.exceptions.InvalidMapSyntaxException;
 import group20.exceptions.InvalidStateException;
 import java.io.IOException;
-import static group20.antgame.AntGameModel.TestStatus.*;
-
 
 import org.junit.After;
 import org.junit.AfterClass;
