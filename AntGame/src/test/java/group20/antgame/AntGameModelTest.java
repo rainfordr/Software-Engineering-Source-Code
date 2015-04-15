@@ -1335,7 +1335,7 @@ public class AntGameModelTest {
         char[][] charMap = mapParser.parseMap(mapStringArray, false);
         mapClass = new Map(charMap);
         MapCell[][] cellMap = mapClass.getCellMap();
-        BrainParserRob bpr = new BrainParserRob();
+        BrainParser bpr = new BrainParser();
         String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
         brain = bpr.parseBrain(brainStringArray);
         AntGameModel instance = new AntGameModel(cellMap, brain, brain);
