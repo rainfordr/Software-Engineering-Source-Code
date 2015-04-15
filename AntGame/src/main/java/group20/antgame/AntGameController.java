@@ -56,12 +56,12 @@ public class AntGameController {
             charMap = mapParser.parseMap(mapArray, true);
         mapChecker = new MapChecker(charMap);
         if(!mapChecker.FinalCheck()){
-            //GUI.makeWarningWindow("This map does not meet competition standards, please choose another file");
+            mapGui.makeWarningWindow("This map does not meet competition standards, please choose another file");
         }
         currentMap = Map.getCellMap(charMap);
         } catch (InvalidMapSyntaxException ex) {
             String warning = ex.getMessage();
-            //GUI.makeWarningWindow("Invalid map syntax: " + warning +" Please choose another file");
+            mapGui.makeWarningWindow("Invalid map syntax: " + warning +" Please choose another file");
         }
     }
     
