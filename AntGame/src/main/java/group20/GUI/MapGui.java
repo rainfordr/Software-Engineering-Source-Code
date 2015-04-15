@@ -185,6 +185,10 @@ public class MapGui extends JFrame {
         m.drawMap();
     }
     
+    public void makeWarningWindow(String msg){
+        JOptionPane.showMessageDialog(gameMenu, msg);
+    }
+    
     public void setMap(){
         worldMap = controller.getCurrentMap();
     }
