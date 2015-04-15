@@ -212,6 +212,7 @@ public class MapGui extends JFrame {
             if (e.getSource() == setMultiAntBrains) {
                 if(chooseMultiBrains.showOpenDialog(gameMenu) == JFileChooser.APPROVE_OPTION){
                     antBrains = chooseMultiBrains.getSelectedFiles();
+                    controller.setAntBrains(antBrains);
                 }
             }
             if (e.getSource() == selectBrain1Button) {
