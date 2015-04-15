@@ -45,6 +45,9 @@ public class MapGui extends JFrame {
     MapCell[][] worldMap;
     JMenuBar menuBar = new JMenuBar();
     JMenu gameMenu = new JMenu("Game");
+    JMenuItem startGameButton = new JMenuItem("Start Game");
+    JMenuItem startTournamentButton = new JMenuItem("Start Tournament");
+    JMenu startSubMenu = new JMenu("Start");
     JMenu worldSubMenu = new JMenu("World");
     JMenu brainsSubMenu = new JMenu("Brains");
     JMenuItem randomWorld = new JMenuItem("Use Random World");
@@ -95,8 +98,13 @@ public class MapGui extends JFrame {
 
     private void windowSetup() {
         chooseMultiBrains.setMultiSelectionEnabled(true);
+        startSubMenu.add(startGameButton);
+        startSubMenu.add(startTournamentButton);
         brainsSubMenu.add(setAntBrains);
         brainsSubMenu.add(setMultiAntBrains);
+        startGameButton.addMouseListener(listener);
+        startTournamentButton.addMouseListener(listener);
+        gameMenu.add(startSubMenu);
         gameMenu.add(brainsSubMenu);
         worldSubMenu.add(selectWorld);
         worldSubMenu.add(randomWorld);
@@ -202,13 +210,28 @@ public class MapGui extends JFrame {
                 System.exit(0);
             }
             if (e.getSource() == resetButton) {
-
+                mapPanel = new JPanel();
+                drawMap();                
+            }
+            if (e.getSource() == startGameButton) {
+                if(controller.getAntBrainCount() > 2){
+                    JOptionPane.showMessageDialog(gameMenu, "You must select two brains in the \"Brains\" submenu first.");
+                } else {
+                    controller.startGame();
+                }              
+            }
+            if (e.getSource() == startTournamentButton) {
+                if(controller.getAntBrainCount() < 3){
+                    JOptionPane.showMessageDialog(gameMenu, "You must select multiple (>2) brains in the \"Brains\" submenu first.");
+                } else {
+                    
+                }                 
             }
             if (e.getSource() == cancelButton) {
                 gameOptionsFrame.setVisible(false);
             }
             if (e.getSource() == okButton) {
-                if (antBrain1.isFile() && antBrain2.isFile()) {
+                if (antBrain1 != null && antBrain2 !=  null) {
                     controller.setAntBrains(new File[]{antBrain1, antBrain2});
                     gameOptionsFrame.setVisible(false);
                 } else {

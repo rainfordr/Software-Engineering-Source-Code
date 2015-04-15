@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,6 +38,7 @@ public class AntGameModel {
    private RandNumGen2 rand;
    private int numOfAnts;
    private boolean test1000;
+
    
    public enum TestStatus{
        TEST1000, TEST10000; 
@@ -558,3 +560,5 @@ public class AntGameModel {
          return dump;
      }
 }
+
+
