@@ -7,6 +7,7 @@ package group20.GUI;
 
 import java.awt.Color;
 import group20.antgame.*;
+import group20.antgame.Ant.Colour;
 import group20.exceptions.InvalidMapSyntaxException;
 import group20.exceptions.InvalidWorldException;
 import java.awt.Dimension;
@@ -32,11 +33,23 @@ public class MapGui extends JFrame {
     AntGameController controller;
 
     Image clearImage;
+    Image clearWRedImage;
+    Image clearWBlackImage;
+    Image redWRedImage;
+    Image redWBlackImage;
+    Image blackWRedImage;
+    Image blackWBlackImage;
     Image rockyImage;
     Image redImage;
     Image blackImage;
     Image foodImage;
     ImageIcon clearIcon;
+    ImageIcon clearWRedIcon;
+    ImageIcon clearWBlackIcon;
+    ImageIcon redWRedIcon;
+    ImageIcon redWBlackIcon;
+    ImageIcon blackWRedIcon;
+    ImageIcon blackWBlackIcon;
     ImageIcon rockyIcon;
     ImageIcon redIcon;
     ImageIcon blackIcon;
@@ -81,7 +94,19 @@ public class MapGui extends JFrame {
             redImage = ImageIO.read(new File("./src/main/resources/graphics/red.png"));
             blackImage = ImageIO.read(new File("./src/main/resources/graphics/black.png"));
             foodImage = ImageIO.read(new File("./src/main/resources/graphics/food.png"));
+            clearWBlackImage = ImageIO.read(new File("./src/main/resources/graphics/clear_w_black.png"));
+            clearWRedImage = ImageIO.read(new File("./src/main/resources/graphics/clear_w_red.png"));
+            redWBlackImage = ImageIO.read(new File("./src/main/resources/graphics/red_w_black.png"));
+            redWRedImage = ImageIO.read(new File("./src/main/resources/graphics/red_w_red.png"));
+            blackWBlackImage = ImageIO.read(new File("./src/main/resources/graphics/black_w_black.png"));
+            blackWRedImage = ImageIO.read(new File("./src/main/resources/graphics/black_w_red.png"));
             clearIcon = new ImageIcon(clearImage);
+            clearWBlackIcon = new ImageIcon(clearWBlackImage);
+            clearWRedIcon = new ImageIcon(clearWRedImage);
+            redWBlackIcon = new ImageIcon(redWBlackImage);
+            redWRedIcon = new ImageIcon(redWRedImage);
+            blackWBlackIcon = new ImageIcon(blackWBlackImage);
+            blackWRedIcon = new ImageIcon(blackWRedImage);
             rockyIcon = new ImageIcon(rockyImage);
             redIcon = new ImageIcon(redImage);
             blackIcon = new ImageIcon(blackImage);
@@ -142,6 +167,7 @@ public class MapGui extends JFrame {
     }
 
     public void drawMap() {
+        this.setVisible(false);
         remove(mapPanel);
         mapPanel = new JPanel();
         mapPanel.setLayout(null);
@@ -173,6 +199,36 @@ public class MapGui extends JFrame {
                     label.setIcon(clearIcon);
                     mapPanel.add(label);
                     label.setBounds(x * 6 + offset, y * 5, 5, 6);
+                } else if (!worldMap[x][y].isRocky() && worldMap[x][y].hasAnt().colour().BLACK == Colour.BLACK){
+                    JLabel label = new JLabel();
+                    label.setIcon(clearWBlackIcon);
+                    mapPanel.add(label);
+                    label.setBounds(x * 6 + offset, y * 5, 5, 6);
+                } else if (!worldMap[x][y].isRocky() && worldMap[x][y].hasAnt().colour().RED == Colour.RED){
+                    JLabel label = new JLabel();
+                    label.setIcon(clearWRedIcon);
+                    mapPanel.add(label);
+                    label.setBounds(x * 6 + offset, y * 5, 5, 6);                    
+                } else if (worldMap[x][y].isAntHillCell(Colour.RED) && worldMap[x][y].hasAnt().colour().BLACK == Colour.BLACK){
+                    JLabel label = new JLabel();
+                    label.setIcon(redWBlackIcon);
+                    mapPanel.add(label);
+                    label.setBounds(x * 6 + offset, y * 5, 5, 6);                    
+                } else if (worldMap[x][y].isAntHillCell(Colour.RED) && worldMap[x][y].hasAnt().colour().RED == Colour.RED){
+                    JLabel label = new JLabel();
+                    label.setIcon(redWRedIcon);
+                    mapPanel.add(label);
+                    label.setBounds(x * 6 + offset, y * 5, 5, 6);                       
+                } else if (worldMap[x][y].isAntHillCell(Colour.BLACK) && worldMap[x][y].hasAnt().colour().BLACK == Colour.BLACK){
+                    JLabel label = new JLabel();
+                    label.setIcon(blackWBlackIcon);
+                    mapPanel.add(label);
+                    label.setBounds(x * 6 + offset, y * 5, 5, 6);                       
+                } else if (worldMap[x][y].isAntHillCell(Colour.BLACK) && worldMap[x][y].hasAnt().colour().RED == Colour.RED){
+                    JLabel label = new JLabel();
+                    label.setIcon(blackWRedIcon);
+                    mapPanel.add(label);
+                    label.setBounds(x * 6 + offset, y * 5, 5, 6);                       
                 }
             }
             if (offset == 0) {
@@ -219,6 +275,7 @@ public class MapGui extends JFrame {
                 if (controller.getAntBrainCount() > 2) {
                     JOptionPane.showMessageDialog(gameMenu, "You must select two brains in the \"Brains\" submenu first.");
                 } else {
+                    drawMap();
                     controller.startGame();
                 }
             }
