@@ -28,6 +28,7 @@ import java.util.logging.Logger;
  * @author owner
  */
 public class AntGameModel {
+    private AntGameController controller;
     private MapCell[][] map;
     private Instruction[] redBrain;
     private Instruction[] blackBrain;
@@ -43,7 +44,8 @@ public class AntGameModel {
    }
 
     
-    public AntGameModel(MapCell[][] map, Instruction[] redBrain, Instruction[] blackBrain){
+    public AntGameModel( AntGameController agc, MapCell[][] map, Instruction[] redBrain, Instruction[] blackBrain){
+        controller = agc;
         this.map = map;
         this.redBrain = redBrain;
         this.blackBrain = blackBrain;
@@ -51,6 +53,7 @@ public class AntGameModel {
         deadAnts = new ArrayList<>();
         rand = new RandNumGen2(randomSeed);
     }
+    
     
     public Pos adjacentCell(Pos p, Dir d){
         int x = p.x;
