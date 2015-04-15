@@ -12,5 +12,20 @@ import group20.Conditions.*;
  * @author owner
  */
 public class FoeHome implements Condition{
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
 }

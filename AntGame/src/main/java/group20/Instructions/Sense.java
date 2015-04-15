@@ -6,6 +6,7 @@
 package group20.Instructions;
 import group20.Instructions.*;
 import group20.Conditions.Condition;
+import java.util.Objects;
 
 /**
  *
@@ -13,10 +14,10 @@ import group20.Conditions.Condition;
  */
 public class Sense implements Instruction{
     
-    private final SenseDir senseDir;
-    private final int st1;
-    private final int st2;
-    private final Condition condition;
+    public SenseDir senseDir;
+    public int st1;
+    public int st2;
+    public  Condition condition;
     public Sense(SenseDir sensedir, int st1, int st2, Condition condition){
         this.senseDir = sensedir;
         this.st1 = st1;
@@ -24,24 +25,40 @@ public class Sense implements Instruction{
         this.condition = condition;
     }
 
-    public SenseDir getSenseDir() {
-        return senseDir;
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.st1;
+        hash = 97 * hash + this.st2;
+        hash = 97 * hash + Objects.hashCode(this.condition);
+        return hash;
     }
 
-    public int getSt1() {
-        return st1;
-    }
-
-    public int getSt2() {
-        return st2;
-    }
-
-    public Condition getCondition() {
-        return condition;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Sense other = (Sense) obj;
+        if (this.st1 != other.st1) {
+            return false;
+        }
+        if (this.st2 != other.st2) {
+            return false;
+        }
+        if (this.condition.getClass() != other.condition.getClass()){
+            return false;
+        }
+        return true;
     }
     
     
+  
     public enum SenseDir {
         HERE, AHEAD, LEFT_AHEAD, RIGHT_AHEAD;
     }
+    
 }

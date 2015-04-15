@@ -1,0 +1,8 @@
+#surefire
+#Wed Apr 15 03:32:24 BST 2015
+maven.ext.class.path=C\:\\Users\\owner\\AppData\\Roaming\\NetBeans\\8.0.1\\maven-nblib\\netbeans-eventspy.jar;C\:\\Users\\owner\\AppData\\Roaming\\NetBeans\\8.0.1\\maven-nblib\\netbeans-eventspy.jar;C\:\\Users\\owner\\AppData\\Roaming\\NetBeans\\8.0.1\\maven-nblib\\netbeans-eventspy.jar
+user.dir=C\:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame
+file.encoding=UTF-8
+localRepository=C\:\\Users\\owner\\.m2\\repository
+basedir=C\:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame
+test=group20.antgame.AntGameModelTest

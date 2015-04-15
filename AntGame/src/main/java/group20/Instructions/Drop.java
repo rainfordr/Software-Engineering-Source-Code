@@ -16,4 +16,22 @@ public class Drop implements Instruction{
     public Drop(int state){
         this.state = state;
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Drop other = (Drop) obj;
+        return this.state == other.state;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + this.state;
+        return hash;
+    }
 }

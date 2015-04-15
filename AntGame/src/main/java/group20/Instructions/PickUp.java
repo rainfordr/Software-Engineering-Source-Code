@@ -24,4 +24,31 @@ public class PickUp implements Instruction{
         this.st1 = st1;
         this.st2 = st2;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.st1;
+        hash = 97 * hash + this.st2;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PickUp other = (PickUp) obj;
+        if (this.st1 != other.st1) {
+            return false;
+        }
+        if (this.st2 != other.st2) {
+            return false;
+        }
+        return true;
+    }
+    
 }

@@ -4,6 +4,7 @@ import group20.Conditions.Condition;
 import group20.Conditions.*;
 import group20.Instructions.Mark.Marker;
 import group20.antgame.Ant.Colour;
+import java.util.Objects;
 
 /**
  * This is the cell class
@@ -245,6 +246,92 @@ public class MapCell {
 
     public boolean isAntHillCell(Colour c) {
         return hillColour == c;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.pos);
+        hash = 29 * hash + (this.rocky ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.ant);
+        hash = 29 * hash + this.foodAmount;
+        hash = 29 * hash + (this.rMarker0 ? 1 : 0);
+        hash = 29 * hash + (this.rMarker1 ? 1 : 0);
+        hash = 29 * hash + (this.rMarker2 ? 1 : 0);
+        hash = 29 * hash + (this.rMarker3 ? 1 : 0);
+        hash = 29 * hash + (this.rMarker4 ? 1 : 0);
+        hash = 29 * hash + (this.rMarker5 ? 1 : 0);
+        hash = 29 * hash + (this.bMarker0 ? 1 : 0);
+        hash = 29 * hash + (this.bMarker1 ? 1 : 0);
+        hash = 29 * hash + (this.bMarker2 ? 1 : 0);
+        hash = 29 * hash + (this.bMarker3 ? 1 : 0);
+        hash = 29 * hash + (this.bMarker4 ? 1 : 0);
+        hash = 29 * hash + (this.bMarker5 ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.hillColour);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MapCell other = (MapCell) obj;
+        if (!Objects.equals(this.pos, other.pos)) {
+            return false;
+        }
+        if (this.rocky != other.rocky) {
+            return false;
+        }
+        if (!Objects.equals(this.ant, other.ant)) {
+            return false;
+        }
+        if (this.foodAmount != other.foodAmount) {
+            return false;
+        }
+        if (this.rMarker0 != other.rMarker0) {
+            return false;
+        }
+        if (this.rMarker1 != other.rMarker1) {
+            return false;
+        }
+        if (this.rMarker2 != other.rMarker2) {
+            return false;
+        }
+        if (this.rMarker3 != other.rMarker3) {
+            return false;
+        }
+        if (this.rMarker4 != other.rMarker4) {
+            return false;
+        }
+        if (this.rMarker5 != other.rMarker5) {
+            return false;
+        }
+        if (this.bMarker0 != other.bMarker0) {
+            return false;
+        }
+        if (this.bMarker1 != other.bMarker1) {
+            return false;
+        }
+        if (this.bMarker2 != other.bMarker2) {
+            return false;
+        }
+        if (this.bMarker3 != other.bMarker3) {
+            return false;
+        }
+        if (this.bMarker4 != other.bMarker4) {
+            return false;
+        }
+        if (this.bMarker5 != other.bMarker5) {
+            return false;
+        }
+        if (this.hillColour != other.hillColour) {
+            return false;
+        }
+        return true;
     }
     
     

@@ -1,9 +1,9 @@
 -------------------------------------------------------------------------------
 Test set: BrainParserTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.06 sec <<< FAILURE!
-TestParseAllInstructions(BrainParserTest)  Time elapsed: 0.02 sec  <<< FAILURE!
-java.lang.AssertionError: expected:<group20.Instructions.Sense@3b764bce> but was:<group20.Instructions.Sense@759ebb3d>
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.059 sec <<< FAILURE!
+TestParseAllInstructions(BrainParserTest)  Time elapsed: 0.017 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<group20.Instructions.Sense@6bf2d08e> but was:<group20.Instructions.Sense@5eb5c224>
 	at org.junit.Assert.fail(Assert.java:93)
 	at org.junit.Assert.failNotEquals(Assert.java:647)
 	at org.junit.Assert.assertEquals(Assert.java:128)

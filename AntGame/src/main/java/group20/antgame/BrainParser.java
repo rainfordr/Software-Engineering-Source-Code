@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package group20.antgame;
 
 import com.sun.org.apache.bcel.internal.generic.D2F;
@@ -15,7 +10,6 @@ import group20.Conditions.Food;
 import group20.Conditions.Friend;
 import group20.Conditions.FriendWithFood;
 import group20.Conditions.Home;
-import group20.Conditions.Marked;
 import group20.Conditions.Rock;
 import group20.Instructions.*;
 import java.io.*;
@@ -28,19 +22,22 @@ import java.util.regex.*;
  */
 public class BrainParser {
 
-    static String conditionsRegex = ("(Foe|FoeHome|FoeMarker|FoeWithFood|Food|Friend|FriendWithFood|Home|Marker(i)|Rock)");
+    static String conditionsRegex = ("(FoeHome|FoeMarker|FoeWithFood|Foe|FriendWithFood|Friend|Food|Home|Marker ([0-9]*)|Rock)");
+    String [] instructionsArray;
+
 
     public static enum instructionType {
 
-        //HERE, AHEAD, LEFT_AHEAD, RIGHT_AHEAD;
         Move("Move ([0-9]*) ([0-9]*)"),
-        PickUp("pickUp ([0-9]*) ([0-9]*)"),
+        PickUp("PickUp ([0-9]*) ([0-9]*)"),
         Drop("Drop ([0-9]*)"),
         Turn("Turn (Left|Right) ([0-9]*)"),
         Flip("Flip ([0-9]*) ([0-9]*) ([0-9]*)"),
         Mark("Mark ([0-9]*) ([0-9]*)"),
         Unmark("Unmark ([0-9]*) ([0-9]*)"),
-        Sense("Sense (Here|Ahead|LeftAhead|RightAhead) ([0-9]*) ([0-9*]) " + conditionsRegex);
+        Sense("Sense (Here|Ahead|LeftAhead|RightAhead) ([0-9]*) ([0-9]*) " + conditionsRegex),
+        //Anything else is invalid
+        Exceptions(".+");
 
         public final String pattern;
 
@@ -107,8 +104,24 @@ public class BrainParser {
             case "Home":
                 con = new Home();
                 break;
-            case "Marked":
-                throw new UnsupportedOperationException("Not implemented yet");
+            case "Marked 0":
+                con = Mark.Marker.MARKER0;
+                break;
+            case "Marked 1":
+                con = Mark.Marker.MARKER1;
+                break;
+            case "Marked 2":
+                con = Mark.Marker.MARKER2;
+                break;
+            case "Marked 3":
+                con = Mark.Marker.MARKER3;
+                break;
+            case "Marked 4":
+                con = Mark.Marker.MARKER4;
+                break;
+            case "Marked 5":
+                con = Mark.Marker.MARKER5;
+                break;
             case "Rock":
                 con = new Rock();
 
@@ -144,10 +157,6 @@ public class BrainParser {
         return returnedInstruction;
 
     }
-    
-
-    
-    
 
     /**
      *
@@ -155,7 +164,13 @@ public class BrainParser {
      * @return the fully initialised brain Instruction[]
      * @throws InvalidBrainSyntaxException if brain not correct syntax
      */
-    public Instruction[] parseBrain(String brain) throws InvalidBrainSyntaxException {
+    public Instruction[] parseBrain(String [] brainInsructions) throws InvalidBrainSyntaxException {
+        
+        String brain = "";
+        
+        for (int i = 0; i < brainInsructions.length; i++) {
+            brain = brain + brainInsructions[i];
+        }
 
         //instructions to be returned
         ArrayList<Instruction> instructions = new ArrayList<>();
@@ -167,8 +182,14 @@ public class BrainParser {
             PatternsBuffer.append(String.format("|(?<%s>%s)", type.name(), type.pattern));
         }
         Pattern tokenPatterns = Pattern.compile(new String(PatternsBuffer.substring(1)));
+        
+        if (brain == null){
+            throw new InvalidBrainSyntaxException("No brain passed to parser");  
+        }
 
         Matcher m = tokenPatterns.matcher(brain);
+        
+        
 
         while (m.find()) {
             if (m.group(instructionType.Move.name()) != null) {
@@ -292,34 +313,37 @@ public class BrainParser {
                     String s2 = m2.group(3);
                     int st2 = Integer.parseInt(s2);
                     String cond = m2.group(4);
-                    String markerNum = m2.group(5);
                     Condition con = parseCondition(cond);
 
                     //(Here|Ahead|LeftAhead|RightAhead)
                     switch (senseDir) {
                         case "Here":
                             instructions.add(new Sense(Sense.SenseDir.HERE, st1, st2, con));
+                            break;
                         case "Ahead":
                             instructions.add(new Sense(Sense.SenseDir.AHEAD, st1, st2, con));
+                            break;
                         case "LeftAhead":
-                            instructions.add(new Sense(Sense.SenseDir.LEFT_AHEAD, st1, st2, con) );
+                            instructions.add(new Sense(Sense.SenseDir.LEFT_AHEAD, st1, st2, con));
+                            break;
                         case "RightAhead":
                             instructions.add(new Sense(Sense.SenseDir.RIGHT_AHEAD, st1, st2, con));
+                            break;
                     }
+
                 }
 
-            } else {
+            } else if (m.group(instructionType.Exceptions.name())!=null) {
                 throw new InvalidBrainSyntaxException("Invalid Antbrain Syntax!!");
             }
 
         }
         Instruction[] instructionArray = new Instruction[instructions.size()];
-
         return instructions.toArray(instructionArray);
 
     }
 
-    private static class InvalidBrainSyntaxException extends Exception {
+    public static class InvalidBrainSyntaxException extends Exception {
 
         public InvalidBrainSyntaxException(String str) {
             super(str);

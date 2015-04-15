@@ -12,6 +12,13 @@ import group20.Instructions.Sense.SenseDir;
 import group20.Instructions.Turn.LeftOrRight;
 import static group20.Instructions.Turn.LeftOrRight.*;
 import group20.antgame.Ant.Colour;
+import static group20.antgame.Ant.Colour.*;
+import static group20.antgame.AntGameModel.TestStatus.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,21 +32,24 @@ public class AntGameModel {
     private Instruction[] redBrain;
     private Instruction[] blackBrain;
     private HashMap<Integer, Ant> ants;
-    private BrainParser brainParser;
-    private MapParser mapParser;
-    
-   private RandomGenerator rand;
+    private ArrayList<Integer> deadAnts;
+    private int randomSeed = 12345;
+   private RandNumGen2 rand;
+   private int numOfAnts;
+   private boolean test1000;
+   
+   public enum TestStatus{
+       TEST1000, TEST10000; 
+   }
 
     
-    public AntGameModel(){
-        map = new MapCell[150][150];
-        redBrain = new Instruction[1000];
-        blackBrain = new Instruction[1000];
-        brainParser = new BrainParser();
-        mapParser = new MapParser();
+    public AntGameModel(MapCell[][] map, Instruction[] redBrain, Instruction[] blackBrain){
+        this.map = map;
+        this.redBrain = redBrain;
+        this.blackBrain = blackBrain;
         ants = new HashMap<>();
-        
-        rand = new RandomGenerator(12345);
+        deadAnts = new ArrayList<>();
+        rand = new RandNumGen2(randomSeed);
     }
     
     public Pos adjacentCell(Pos p, Dir d){
@@ -129,7 +139,13 @@ public class AntGameModel {
     }
     
     public int resting(Ant a){
+        try{
+            return a.resting();
+        }catch(NullPointerException ex){
+            boolean test = true;
+        }
         return a.resting();
+
     }
     
     public Dir direction(Ant a){
@@ -165,15 +181,20 @@ public class AntGameModel {
     }
     
     public void setAntAt(Pos p, Ant a){
+        a.setPosition(p);
         mapCell(p).putAnt(a);
     }
     
     public void clearAntAt(Pos p){
+        antAt(p).setPosition(null);
         mapCell(p).clearAnt();
     }
     
     public boolean antIsAlive(int id){
-        return ants.containsKey(id);
+        if(ants.get(id) == null){
+            return false;
+        }
+        return ants.get(id).isAlive();
     }
     
     public Pos findAnt(int id){
@@ -181,8 +202,11 @@ public class AntGameModel {
     }
     
     public void KillAntAt(Pos p){
-        ants.remove(mapCell(p).getAnt().getID());
+        Ant a = mapCell(p).getAnt();
+        int id = a.getID();
+        a.kill();
         clearAntAt(p);
+        deadAnts.add(id);
     }
     
     public void setMarkerAt(Pos p, Colour c, Marker m){
@@ -215,10 +239,7 @@ public class AntGameModel {
     
     public boolean cellMatches(Pos p, Colour c, Condition cond){
         if(rocky(p)){
-            if(cond instanceof Rock){
-                return true;
-            }
-            return false;            
+            return cond instanceof Rock;            
         }
         else if(cond instanceof Rock){
             return false;
@@ -242,9 +263,9 @@ public class AntGameModel {
         else if(cond instanceof Food){
             return foodAt(p) > 0;
         }
-        else if(cond instanceof Marker){ // possibly use marked class instead of instanceof Marker, I was trying to be clever and made Marker implement condition.
+        else if(cond instanceof Marker){
             Marker m = (Marker)cond;
-            return checkMarkerAt(p, c, m);// possibly will be wrong marker enum after casting. If so will use Marked class here and get correct m from that.
+            return checkMarkerAt(p, c, m);
         }
         else if(cond instanceof FoeMarker){
             return checkAnyMarkerAt(p, otherColour(c));
@@ -271,7 +292,8 @@ public class AntGameModel {
      public int adjacentAnts(Pos p, Colour c){
          int adjAnts = 0;
          for(Dir dir: Dir.values){
-             if(someAntIsAt(p) && colour(antAt(p)) == c){
+             Pos adj = adjacentCell(p, dir);
+             if(someAntIsAt(adj) && colour(antAt(adj)) == c){
                  adjAnts++;
              }
          }
@@ -299,7 +321,7 @@ public class AntGameModel {
          }
      }
      
-     public void Step(int id){
+     public void step(int id){
          if(antIsAlive(id)){
              Pos pos = findAnt(id);
              Ant ant = antAt(pos);
@@ -312,11 +334,11 @@ public class AntGameModel {
                  Instruction instruction = getInstruction(col, state);
                  if(instruction instanceof Sense){
                      Sense sense = (Sense)instruction;
-                     Pos pos2 = sensedCell(pos, ant.direction(), sense.getSenseDir());
-                         if (cellMatches(pos, col, sense.getCondition())) {
-                             setState(ant, sense.getSt1());
+                     Pos pos2 = sensedCell(pos, ant.direction(), sense.senseDir);
+                         if (cellMatches(pos2, col, sense.condition)) {
+                             setState(ant, sense.st1);
                          } else {
-                             setState(ant, sense.getSt2());
+                             setState(ant, sense.st2);
                          }
                  }
                  else if(instruction instanceof Mark){
@@ -384,7 +406,7 @@ public class AntGameModel {
                      int st1 = flip.st1;
                      int st2 = flip.st2;
                      
-                     int randInt = rand.randomInt(randLimit);
+                     int randInt = rand.randInt(randLimit);
                      if (randInt == 0){
                          setState(ant, st1);
                      }
@@ -399,4 +421,140 @@ public class AntGameModel {
          }
      }
      
+     private void removeDeadAnts(){
+         for(int id: deadAnts){
+             ants.remove(id);
+         }
+         deadAnts = new ArrayList<>();
+     }
+     
+     public void playRound(){
+         for(int id = 0; id < numOfAnts; id++){
+             step(id);
+         }
+         removeDeadAnts();
+     }
+     
+     public void playGameTest(int rounds, boolean ts){
+        String filePath;
+        if(ts){
+           filePath = "C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\myDump1000";
+        }
+        else{
+            filePath = "C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\myMassiveDump";
+        }
+        Utils.clearFile(filePath);
+        String dump = "random seed: " + randomSeed + "\n";
+        dump += dumpRound(0);
+        Utils.appendToFile(dump, filePath);
+        for(int turn = 1; turn <= rounds; turn ++){
+            playRound();
+            dump = dumpRound(turn);
+            Utils.appendToFile(dump, filePath);
+            if(turn % 1000 == 0){
+                int test = 1;
+                System.out.println("1000 rounds played");
+             }
+         }
+     }
+     
+     public void playGame(int rounds){
+         for(int turn = 1; turn <= rounds; turn ++){
+             playRound();
+             if(turn % 1000 == 0){
+                 int test = 1;
+                 System.out.println("1000 rounds played");
+             }
+         }
+     }
+     
+    public void playGame(int rounds, boolean ts){
+        playGameTest(rounds, ts);
+    }
+     
+     public void populateAntHills(){
+         int mapWidth = map[0].length;
+         int mapHeight = map.length;
+         int id = 0;
+         for(int y = 0; y < mapHeight; y++){
+             for(int x = 0; x < mapWidth; x++){
+                 Pos p = new Pos(x, y);
+                 MapCell cell = mapCell(p);
+                 if(cell.isAntHillCell(RED)){
+                     Ant a = new Ant(RED, id, p);
+                     ants.put(id, a);
+                     setAntAt(p, a);
+                     id++;
+                 }
+                 else if(cell.isAntHillCell(BLACK)){
+                     Ant a = new Ant(BLACK, id, p);
+                     ants.put(id, a);
+                     cell.putAnt(a);
+                     id++;
+                 }
+             }
+         }
+         numOfAnts = ants.size();
+     }
+     
+     private String dumpRound(int turn){
+         String dump = "\n" + "After round " + turn + "...\n";
+         for(int y = 0; y < map.length; y++){
+             for(int x = 0; x < map[0].length; x++){
+                 Pos p = new Pos(x,y);
+                 MapCell mc = mapCell(p);
+                 dump += "cell (" + x + ", " + y + "): ";
+                 if(rocky(p)){
+                     dump += "rock";
+                 }
+                 else {
+                    if(foodAt(p) != 0){
+                    dump += foodAt(p) + " food; ";
+                    }
+                    if(antHillAt(p, RED)){
+                        dump += "red hill; ";
+                    }
+                    else if(antHillAt(p, BLACK)){
+                        dump += "black hill; ";
+                    }
+                    if (checkAnyMarkerAt(p, RED)){
+                        dump += "red marks: ";
+                        for(Marker marker: Marker.values()){
+                            if(checkMarkerAt(p, RED, marker)){
+                                dump += marker.ordinal();
+                            }
+                        }
+                        dump += "; ";
+                    }
+                    if (checkAnyMarkerAt(p, BLACK)){
+                        dump += "black marks: ";
+                        for(Marker marker: Marker.values()){
+                            if(checkMarkerAt(p, BLACK, marker)){
+                                dump += marker.ordinal();
+                            }
+                        }
+                        dump += "; ";
+                    }
+                    if (someAntIsAt(p)){
+                        Ant a = antAt(p);
+                        int food = 0;
+                        if(a.hasFood()){
+                            food = 1;
+                        }
+                        String colour;
+                        if(colour(a) == RED){
+                            colour = "red";
+                        }
+                        else{
+                            colour = "black";
+                        }
+                        dump += colour + " ant of id " + a.getID() + ", dir " + a.direction().ordinal() + ", food " + food + ", state " + a.state() + ", resting " + a.resting();
+                    }
+                    
+                 }
+                 dump += "\n";
+             }
+         }
+         return dump;
+     }
 }

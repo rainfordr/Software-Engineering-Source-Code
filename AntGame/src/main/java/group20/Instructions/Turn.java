@@ -6,6 +6,7 @@
 package group20.Instructions;
 
 import group20.Instructions.*;
+import java.util.Objects;
 
 /**
  *
@@ -27,4 +28,32 @@ public class Turn implements Instruction{
     public enum LeftOrRight{
         LEFT, RIGHT;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.turnDir);
+        hash = 29 * hash + this.state;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Turn other = (Turn) obj;
+        if (this.turnDir != other.turnDir) {
+            return false;
+        }
+        if (this.state != other.state) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
