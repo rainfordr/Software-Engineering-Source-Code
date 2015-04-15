@@ -19,6 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 /**
  *
