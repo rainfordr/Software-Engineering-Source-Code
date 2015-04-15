@@ -22,6 +22,8 @@ import static group20.antgame.Ant.Colour.*;
 import group20.exceptions.InvalidMapSyntaxException;
 import group20.exceptions.InvalidStateException;
 import java.io.IOException;
+import static group20.antgame.AntGameModel.TestStatus.*;
+
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -1326,21 +1328,64 @@ public class AntGameModelTest {
      * to the dump files from this game.
      */
     @Test
-    public void testPlayRound() throws IOException, InvalidMapSyntaxException, BrainParser.InvalidBrainSyntaxException {
-        System.out.println("playRound");
+    public void testPlayRoundFor1000RoundsMatchesDump() throws IOException, InvalidMapSyntaxException, BrainParser.InvalidBrainSyntaxException {
+        System.out.println("playRound1000");
         mapParser = new MapParser();
         String[] mapStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\tiny.world");
         char[][] charMap = mapParser.parseMap(mapStringArray, false);
         mapClass = new Map(charMap);
         MapCell[][] cellMap = mapClass.getCellMap();
-        BrainParser bpr = new BrainParser();
+        BrainParserRob bpr = new BrainParserRob();
         String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
         brain = bpr.parseBrain(brainStringArray);
         AntGameModel instance = new AntGameModel(cellMap, brain, brain);
         instance.populateAntHills();
-        instance.playGame(1001);
+        instance.playGame(1000, true);
         String[] expResult = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\testDump\\dump0-1000.0-1000");
-        String[] result = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\dump");
+        String[] result = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\myDump1000");
         assertArrayEquals(expResult, result);
-    }    
+    }   
+    
+    /**
+     * Test of playRound method, of class AntGameModel. Compares provided dump files
+     * to the dump files from this game.
+     */
+    @Test
+    public void testPlayRoundFor10000RoundsMatchesDump() throws IOException, InvalidMapSyntaxException, BrainParser.InvalidBrainSyntaxException {
+        System.out.println("playRound10000");
+        mapParser = new MapParser();
+        String[] mapStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\tiny.world");
+        char[][] charMap = mapParser.parseMap(mapStringArray, false);
+        mapClass = new Map(charMap);
+        MapCell[][] cellMap = mapClass.getCellMap();
+        BrainParserRob bpr = new BrainParserRob();
+        String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
+        brain = bpr.parseBrain(brainStringArray);
+        AntGameModel instance = new AntGameModel(cellMap, brain, brain);
+        instance.populateAntHills();
+        instance.playGame(10000, false);
+        String[] expResult = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\testDump\\dumpall");
+        String[] result = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\myMassiveDump");
+        assertArrayEquals(expResult, result);
+    }
+    
+    /**
+     * Test of playRound method, of class AntGameModel. Compares provided dump files
+     * to the dump files from this game.
+     */
+    @Test
+    public void testPlayRoundFor300000RoundsFinishes() throws IOException, InvalidMapSyntaxException, BrainParser.InvalidBrainSyntaxException {
+        System.out.println("playRound300000");
+        mapParser = new MapParser();
+        String[] mapStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\tiny.world");
+        char[][] charMap = mapParser.parseMap(mapStringArray, false);
+        mapClass = new Map(charMap);
+        MapCell[][] cellMap = mapClass.getCellMap();
+        BrainParserRob bpr = new BrainParserRob();
+        String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
+        brain = bpr.parseBrain(brainStringArray);
+        AntGameModel instance = new AntGameModel(cellMap, brain, brain);
+        instance.populateAntHills();
+        instance.playGame(300000);
+    }
 }

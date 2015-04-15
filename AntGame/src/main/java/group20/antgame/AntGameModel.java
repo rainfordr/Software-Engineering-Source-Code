@@ -13,6 +13,11 @@ import group20.Instructions.Turn.LeftOrRight;
 import static group20.Instructions.Turn.LeftOrRight.*;
 import group20.antgame.Ant.Colour;
 import static group20.antgame.Ant.Colour.*;
+import static group20.antgame.AntGameModel.TestStatus.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -30,6 +35,12 @@ public class AntGameModel {
     private ArrayList<Integer> deadAnts;
     private int randomSeed = 12345;
    private RandNumGen2 rand;
+   private int numOfAnts;
+   private boolean test1000;
+   
+   public enum TestStatus{
+       TEST1000, TEST10000; 
+   }
 
     
     public AntGameModel(MapCell[][] map, Instruction[] redBrain, Instruction[] blackBrain){
@@ -324,7 +335,7 @@ public class AntGameModel {
                  if(instruction instanceof Sense){
                      Sense sense = (Sense)instruction;
                      Pos pos2 = sensedCell(pos, ant.direction(), sense.senseDir);
-                         if (cellMatches(pos, col, sense.condition)) {
+                         if (cellMatches(pos2, col, sense.condition)) {
                              setState(ant, sense.st1);
                          } else {
                              setState(ant, sense.st2);
@@ -418,20 +429,48 @@ public class AntGameModel {
      }
      
      public void playRound(){
-         for(int id: ants.keySet()){
+         for(int id = 0; id < numOfAnts; id++){
              step(id);
          }
          removeDeadAnts();
      }
      
-     public void playGame(int Rounds){
-         String dump = "random seed: " + randomSeed + "\n";
-         for(int turn = 0; turn < Rounds; turn ++){
-             playRound();
-             dump += dumpRound(turn);
+     public void playGameTest(int rounds, boolean ts){
+        String filePath;
+        if(ts){
+           filePath = "C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\myDump1000";
+        }
+        else{
+            filePath = "C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\myMassiveDump";
+        }
+        Utils.clearFile(filePath);
+        String dump = "random seed: " + randomSeed + "\n";
+        dump += dumpRound(0);
+        Utils.appendToFile(dump, filePath);
+        for(int turn = 1; turn <= rounds; turn ++){
+            playRound();
+            dump = dumpRound(turn);
+            Utils.appendToFile(dump, filePath);
+            if(turn % 1000 == 0){
+                int test = 1;
+                System.out.println("1000 rounds played");
+             }
          }
-         Utils.writeToFile(dump, "C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\myDump\\dump");
      }
+     
+     public void playGame(int rounds){
+         for(int turn = 1; turn <= rounds; turn ++){
+             playRound();
+             if(turn % 1000 == 0){
+                 int test = 1;
+                 System.out.println("1000 rounds played");
+             }
+         }
+     }
+     
+    public void playGame(int rounds, boolean ts){
+        playGameTest(rounds, ts);
+    }
      
      public void populateAntHills(){
          int mapWidth = map[0].length;
@@ -455,6 +494,7 @@ public class AntGameModel {
                  }
              }
          }
+         numOfAnts = ants.size();
      }
      
      private String dumpRound(int turn){
@@ -483,8 +523,8 @@ public class AntGameModel {
                             if(checkMarkerAt(p, RED, marker)){
                                 dump += marker.ordinal();
                             }
-                            dump += "; ";
                         }
+                        dump += "; ";
                     }
                     if (checkAnyMarkerAt(p, BLACK)){
                         dump += "black marks: ";
@@ -492,8 +532,8 @@ public class AntGameModel {
                             if(checkMarkerAt(p, BLACK, marker)){
                                 dump += marker.ordinal();
                             }
-                            dump += "; ";
                         }
+                        dump += "; ";
                     }
                     if (someAntIsAt(p)){
                         Ant a = antAt(p);

@@ -39,6 +39,13 @@ public class Map {
         height = charMap.length;
         map = new MapCell[width][height];
     }
+    
+    public static MapCell[][] getCellMap(char[][] charMap){
+        char[][] CHARMAP = charMap;
+        int WIDTH = charMap[0].length;
+        int HEIGHT = charMap.length;
+        return getCellMap(HEIGHT, WIDTH, CHARMAP);
+    }
 
     public Map(File worldFile) throws FileNotFoundException, InvalidWorldException {
         int count150 = 0;
@@ -128,6 +135,33 @@ public class Map {
         }
         return map;
     }
+    
+        public static MapCell[][] getCellMap(int height, int width, char[][] cm){
+            MapCell[][] MAP = new MapCell[height][width];
+            for(int row = 0; row < height; row++){
+                for(int col = 0; col < width; col++){
+                    char cell = cm[col][row];
+                    if (cell == '#') {
+                                MAP[col][row] = new MapCell(new Pos(col, row), true, 0, null);
+                    }
+                    if (cell == '.') {
+                        MAP[col][row] = new MapCell(new Pos(col, row), false, 0, null);
+                    }
+                    if (cell == '+') {
+                        MAP[col][row] = new MapCell(new Pos(col, row), false, 0, RED);
+                    }
+                    if (cell == '-') {
+                        MAP[col][row] = new MapCell(new Pos(col, row), false, 0, BLACK);
+                    }
+                    if (Character.isDigit(cell)) {                    
+                        int foodAmount = Integer.parseInt(("" + cell));
+                        System.out.println("found food: " + foodAmount);
+                        MAP[col][row] = new MapCell(new Pos(col, row), false, foodAmount, null);
+                    }
+                }
+            }
+            return MAP;
+        }
 
     /**
      * This method sets a cell to blocked.

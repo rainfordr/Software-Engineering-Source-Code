@@ -13,6 +13,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,19 @@ public class Utils {
         return lines.toArray(new String[lines.size()]);
     }
     
+    public static String[] fileToStringArray(File f) throws FileNotFoundException, IOException{
+        FileReader fr = new FileReader(f);
+        List<String> lines;
+        try (BufferedReader bufferedReader = new BufferedReader(fr)) {
+            lines = new ArrayList<>();
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                lines.add(line);
+            }
+        }
+        return lines.toArray(new String[lines.size()]);
+    }
+    
     public static void writeToFile(String fileString, String filePath){
 
         try {
@@ -79,6 +93,27 @@ public class Utils {
         } catch (IOException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Could not write file");
+        }
+    }
+    
+    public static void clearFile(String filePath){
+        PrintWriter pw;
+        try {
+            pw = new PrintWriter(filePath);
+            pw.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Could not find file");
+
+        }
+    }
+    
+    public static void appendToFile(String text, String filePath){
+        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filePath , true)))) {
+            out.print(text);
+            out.close();
+        }catch (IOException e) {
+            System.out.println("Cannot find File");
         }
     }
 }

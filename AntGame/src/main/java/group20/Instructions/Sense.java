@@ -14,10 +14,10 @@ import java.util.Objects;
  */
 public class Sense implements Instruction{
     
-    public static SenseDir senseDir;
-    public static int st1;
-    public static int st2;
-    public static Condition condition;
+    public SenseDir senseDir;
+    public int st1;
+    public int st2;
+    public  Condition condition;
     public Sense(SenseDir sensedir, int st1, int st2, Condition condition){
         this.senseDir = sensedir;
         this.st1 = st1;
