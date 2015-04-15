@@ -7,6 +7,7 @@ package group20.GUI;
 
 import java.awt.Color;
 import group20.antgame.*;
+import group20.exceptions.InvalidMapSyntaxException;
 import group20.exceptions.InvalidWorldException;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -27,6 +28,7 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
  * @author bryan1495
  */
 public class MapGui extends JFrame {
+
     AntGameController controller;
 
     Image clearImage;
@@ -91,7 +93,6 @@ public class MapGui extends JFrame {
         this.worldMap = worldMap.getMap();
     }
 
-
     private void windowSetup() {
         chooseMultiBrains.setMultiSelectionEnabled(true);
         brainsSubMenu.add(setAntBrains);
@@ -126,10 +127,10 @@ public class MapGui extends JFrame {
     }
 
     public MapGui(AntGameController antGameController) {
-        controller = antGameController;
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         windowSetup();
         this.worldMap = antGameController.getCurrentMap();
+        controller = antGameController;
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public void drawMap() {
@@ -179,17 +180,13 @@ public class MapGui extends JFrame {
 
     public static void main(String[] args) throws FileNotFoundException, InvalidWorldException {
         AntGameController agc = new AntGameController();
-        MapGui m = new MapGui(agc);
-        m.setMap();
-        m.loadImages();
-        m.drawMap();
     }
-    
-    public void makeWarningWindow(String msg){
+
+    public void makeWarningWindow(String msg) {
         JOptionPane.showMessageDialog(gameMenu, msg);
     }
-    
-    public void setMap(){
+
+    public void setMap() {
         worldMap = controller.getCurrentMap();
     }
 
@@ -210,33 +207,38 @@ public class MapGui extends JFrame {
             if (e.getSource() == cancelButton) {
                 gameOptionsFrame.setVisible(false);
             }
+            if (e.getSource() == okButton) {
+                if (antBrain1.isFile() && antBrain2.isFile()) {
+                    controller.setAntBrains(new File[]{antBrain1, antBrain2});
+                    gameOptionsFrame.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(gameMenu, "You must select both ant brains first.");
+                }
+            }
             if (e.getSource() == setAntBrains) {
                 gameOptionsFrame.setVisible(true);
             }
             if (e.getSource() == setMultiAntBrains) {
-                if(chooseMultiBrains.showOpenDialog(gameMenu) == JFileChooser.APPROVE_OPTION){
+                if (chooseMultiBrains.showOpenDialog(gameMenu) == JFileChooser.APPROVE_OPTION) {
                     antBrains = chooseMultiBrains.getSelectedFiles();
                     controller.setAntBrains(antBrains);
                 }
             }
             if (e.getSource() == selectBrain1Button) {
-                if(chooseBrain1.showOpenDialog(gameMenu) == JFileChooser.APPROVE_OPTION){
+                if (chooseBrain1.showOpenDialog(gameMenu) == JFileChooser.APPROVE_OPTION) {
                     antBrain1 = chooseBrain1.getSelectedFile();
                 }
             }
             if (e.getSource() == selectBrain2Button) {
-                if(chooseBrain2.showOpenDialog(gameMenu) == JFileChooser.APPROVE_OPTION){
+                if (chooseBrain2.showOpenDialog(gameMenu) == JFileChooser.APPROVE_OPTION) {
                     antBrain2 = chooseBrain1.getSelectedFile();
                 }
             }
             if (e.getSource() == randomWorld) {
-
                 wg = new WorldGenerator();
                 char[][] charMap = wg.generateMap();
-                Map mapClass = new Map(charMap);
-                worldMap = mapClass.getCellMap();
                 worldMap = Map.getCellMap(charMap);
-
+                controller.setCurrentMap(worldMap);
                 mapPanel = new JPanel();
                 drawMap();
             }
@@ -244,13 +246,22 @@ public class MapGui extends JFrame {
                 if (chooseWorld.showOpenDialog(gameMenu) == JFileChooser.APPROVE_OPTION) {
                     try {
                         System.out.println("HERE");
-                        Map fromFile = new Map(chooseWorld.getSelectedFile());
-                        worldMap = fromFile.getCellMap();
-                        mapPanel = new JPanel();
-                        drawMap();
+                        File selectedFile = chooseWorld.getSelectedFile();
+                        String[] mapArray = Utils.fileToStringArray(selectedFile);
+                        char[][] charMap = new MapParser().parseMap(mapArray, true);
+                        MapChecker mapChecker = new MapChecker(charMap);
+                        if (!mapChecker.FinalCheck()) {
+                            JOptionPane.showMessageDialog(gameMenu, "This map does not meet competition standards, please choose another file.");
+                        } else {
+                            worldMap = Map.getCellMap(charMap);
+                            controller.setCurrentMap(worldMap);
+                            mapPanel = new JPanel();
+                            drawMap();
+                        }
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(MapGui.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InvalidWorldException ex) {
+                    } catch (InvalidMapSyntaxException | IOException ex) {
+                        JOptionPane.showMessageDialog(gameMenu, "This map does not meet competition standards, please choose another file.");
                         Logger.getLogger(MapGui.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -273,4 +284,3 @@ public class MapGui extends JFrame {
         }
     }
 }
-
