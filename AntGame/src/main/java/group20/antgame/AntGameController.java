@@ -45,6 +45,10 @@ public class AntGameController {
         }
     }
     
+    public void setAntBrains(File[] brains){
+        playerBrains = brains;
+    }
+    
     public void setCurrentMapFromFile(String filePath) throws IOException{
         String[] mapArray = Utils.fileToStringArray(filePath);
         char[][] charMap;
