@@ -64,15 +64,23 @@ public class AntGameController {
             playerBrains = brains;
         }
     }
-    
-    public void startGame(){
+
+    public void startGame() {
         model = new AntGameModel(currentMap, parsedBrains.get(0), parsedBrains.get(1));
-        for(int i = 0; i < 300000; i++){
+        model.populateAntHills();
+        for (int i = 0; i < 300000; i++) {
             model.playRound();
-             if(i % 1000 == 0){
-                 mapGui.drawMap();
-                 System.out.println("1000 rounds played");
-             }
+            if (i % 1000 == 0) {
+                mapGui.setMap();
+                mapGui.drawMap();
+                try {
+                    Thread.sleep(5);
+                    System.out.println("Slept");
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(AntGameController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println("1000 rounds played");
+            }
         }
     }
 
