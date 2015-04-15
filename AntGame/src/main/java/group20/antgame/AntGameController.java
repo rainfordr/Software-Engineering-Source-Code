@@ -50,7 +50,6 @@ public class AntGameController {
         }
     }
 
-
     public void setAntBrains(File[] brains) {
         File failedBrain;
         if ((failedBrain = parseBrain(brains)) != null) {
