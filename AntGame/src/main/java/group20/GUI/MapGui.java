@@ -142,6 +142,8 @@ public class MapGui extends JFrame {
     }
 
     public void drawMap() {
+        remove(mapPanel);
+        mapPanel = new JPanel();
         mapPanel.setLayout(null);
         int offset = 0;
         for (int y = 0; y < 150; y++) {
@@ -180,9 +182,10 @@ public class MapGui extends JFrame {
             }
         }
         mapPanel.setMinimumSize(new Dimension(600, 750));
+        mapPanel.repaint();
         add(mapPanel);
         this.setResizable(false);
-        this.setSize(900, 750);
+        this.setSize(910, 800);
         this.setVisible(true);
     }
 
@@ -210,28 +213,27 @@ public class MapGui extends JFrame {
                 System.exit(0);
             }
             if (e.getSource() == resetButton) {
-                mapPanel = new JPanel();
-                drawMap();                
+                drawMap();
             }
             if (e.getSource() == startGameButton) {
-                if(controller.getAntBrainCount() > 2){
+                if (controller.getAntBrainCount() > 2) {
                     JOptionPane.showMessageDialog(gameMenu, "You must select two brains in the \"Brains\" submenu first.");
                 } else {
                     controller.startGame();
-                }              
+                }
             }
             if (e.getSource() == startTournamentButton) {
-                if(controller.getAntBrainCount() < 3){
+                if (controller.getAntBrainCount() < 3) {
                     JOptionPane.showMessageDialog(gameMenu, "You must select multiple (>2) brains in the \"Brains\" submenu first.");
                 } else {
-                    
-                }                 
+
+                }
             }
             if (e.getSource() == cancelButton) {
                 gameOptionsFrame.setVisible(false);
             }
             if (e.getSource() == okButton) {
-                if (antBrain1 != null && antBrain2 !=  null) {
+                if (antBrain1 != null && antBrain2 != null) {
                     controller.setAntBrains(new File[]{antBrain1, antBrain2});
                     gameOptionsFrame.setVisible(false);
                 } else {
@@ -262,7 +264,6 @@ public class MapGui extends JFrame {
                 char[][] charMap = wg.generateMap();
                 worldMap = Map.getCellMap(charMap);
                 controller.setCurrentMap(worldMap);
-                mapPanel = new JPanel();
                 drawMap();
             }
             if (e.getSource() == selectWorld) {
@@ -278,7 +279,6 @@ public class MapGui extends JFrame {
                         } else {
                             worldMap = Map.getCellMap(charMap);
                             controller.setCurrentMap(worldMap);
-                            mapPanel = new JPanel();
                             drawMap();
                         }
                     } catch (FileNotFoundException ex) {
