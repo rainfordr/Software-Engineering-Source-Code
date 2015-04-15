@@ -8,10 +8,13 @@ package group20.antgame;
 import group20.GUI.MapGui;
 import group20.Instructions.Instruction;
 import group20.exceptions.InvalidMapSyntaxException;
+import group20.exceptions.InvalidWorldException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,37 +34,67 @@ public class AntGameController {
     private Instruction[][] players;
     private int[] playerScores;
     private File[] playerBrains;
+    private List<Instruction[]> parsedBrains = new ArrayList<>();
+
+    public static void main(String args[]) {
+        AntGameController controller = new AntGameController();
+    }
 
     public AntGameController() {
-        mapGui = new MapGui(this);
-        brainParser = new BrainParser();
-        mapParser = new MapParser();
-        worldGen = new WorldGenerator();
         try {
             setCurrentMapFromFile("./src/main/resources/worlds/1.world");
-            mapGui.setMap();
-
         } catch (IOException ex) {
-            //GUI.makeWarningWindow("File not found, please choose another file");
+            mapGui.makeWarningWindow("File not found, please choose another file");
+        } catch (InvalidWorldException ex) {
+            mapGui.makeWarningWindow("Invalid world.");
         }
     }
 
-    public void setCurrentMapFromFile(String filePath) throws IOException {
-        String[] mapArray = Utils.fileToStringArray(filePath);
-        char[][] charMap;
-        try {
-            charMap = mapParser.parseMap(mapArray, true);
-            mapChecker = new MapChecker(charMap);
-            if (!mapChecker.FinalCheck()) {
-            //GUI.makeWarningWindow("This map does not meet competition standards, please choose another file");
 
-            }
-            currentMap = Map.getCellMap(charMap);
-        } catch (InvalidMapSyntaxException ex) {
-            String warning = ex.getMessage();
-            //GUI.makeWarningWindow("Invalid map syntax: " + warning +" Please choose another file");
+    public void setAntBrains(File[] brains) {
+        File failedBrain;
+        if ((failedBrain = parseBrain(brains)) != null) {
+            mapGui.makeWarningWindow("The brain \"" + failedBrain.getName() + "\" is not a syntactically correct brain. Please select a different brain.");
+        } else {
+            playerBrains = brains;
         }
-        mapGui.setMap();
+    }
+    
+    public void startGame(){
+        model = new AntGameModel(this, currentMap, parsedBrains.get(0), parsedBrains.get(1));
+        for(int i = 0; i < 300000; i++){
+            model.playRound();
+             if(i % 1000 == 0){
+                 mapGui.drawMap();
+                 System.out.println("1000 rounds played");
+             }
+        }
+    }
+
+    public int getAntBrainCount() {
+        if (playerBrains == null) {
+            return 0;
+        }
+        return playerBrains.length;
+    }
+
+    public File parseBrain(File[] brains) {
+        for (File brain : brains) {
+            try {
+                parsedBrains.add(brainParser.parseBrain(Utils.fileToStringArray(brain)));
+            } catch (IOException ex) {
+                Logger.getLogger(AntGameController.class.getName()).log(Level.SEVERE, null, ex);
+                return brain;
+            } catch (BrainParser.InvalidBrainSyntaxException ex) {
+                Logger.getLogger(AntGameController.class.getName()).log(Level.SEVERE, null, ex);
+                return brain;
+            }
+        }
+        return null;
+    }
+
+    public void setCurrentMapFromFile(String filePath) throws IOException, FileNotFoundException, InvalidWorldException {
+        currentMap = new Map(new File(filePath)).getCellMap();
     }
 
     public void setRandomMap() {
@@ -72,4 +105,9 @@ public class AntGameController {
     public MapCell[][] getCurrentMap() {
         return currentMap;
     }
+
+    public void setCurrentMap(MapCell[][] map) {
+        currentMap = map;
+    }
+
 }

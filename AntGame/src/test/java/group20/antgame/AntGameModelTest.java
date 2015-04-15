@@ -130,7 +130,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(2,2);
         Dir d = ZERO;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(3,2);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -141,7 +141,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(2,2);
         Dir d = ZERO;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(2,3);
         Pos result = instance.adjacentCell(p, d);
         assertFalse(expResult.equals(result));
@@ -152,7 +152,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(2,2);
         Dir d = ONE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(2,3);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -163,7 +163,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(2,2);
         Dir d = TWO;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(1,3);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -174,7 +174,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(2,2);
         Dir d = THREE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(1,2);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -185,7 +185,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(2,2);
         Dir d = FOUR;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(1,1);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -196,7 +196,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(2,2);
         Dir d = FIVE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(2,1);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -210,7 +210,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(3,3);
         Dir d = ZERO;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(4,3);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -224,7 +224,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(3,3);
         Dir d = ONE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(4,4);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -237,7 +237,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(3,3);
         Dir d = TWO;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(3,4);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -250,7 +250,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(3,3);
         Dir d = THREE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(2,3);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -263,7 +263,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(3,3);
         Dir d = FOUR;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(3,2);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -276,7 +276,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(3,3);
         Dir d = FIVE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(4,2);
         Pos result = instance.adjacentCell(p, d);
         assertEquals(expResult, result);
@@ -290,7 +290,7 @@ public class AntGameModelTest {
         System.out.println("adjacentCell");
         Pos p = new Pos(3,3);
         Dir d = FIVE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(3,2);
         Pos result = instance.adjacentCell(p, d);
         assertFalse(expResult.equals(result));
@@ -304,7 +304,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = LEFT;
         Dir d = ZERO;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = ONE;
         Dir result = instance.turn(lr, d);
         assertFalse(expResult.equals(result));
@@ -318,7 +318,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = LEFT;
         Dir d = ZERO;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = FIVE;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -329,7 +329,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = LEFT;
         Dir d = ONE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = ZERO;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -340,7 +340,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = LEFT;
         Dir d = TWO;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = ONE;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -351,7 +351,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = LEFT;
         Dir d = THREE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = TWO;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -362,7 +362,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = LEFT;
         Dir d = FOUR;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = THREE;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -373,7 +373,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = LEFT;
         Dir d = FIVE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = FOUR;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -384,7 +384,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = RIGHT;
         Dir d = ZERO;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = ONE;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -395,7 +395,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = RIGHT;
         Dir d = ONE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = TWO;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -406,7 +406,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = RIGHT;
         Dir d = TWO;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = THREE;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -417,7 +417,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = RIGHT;
         Dir d = THREE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = FOUR;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -428,7 +428,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = RIGHT;
         Dir d = FOUR;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = FIVE;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -439,7 +439,7 @@ public class AntGameModelTest {
         System.out.println("turn");
         Turn.LeftOrRight lr = RIGHT;
         Dir d = FIVE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Dir expResult = ZERO;
         Dir result = instance.turn(lr, d);
         assertEquals(expResult, result);
@@ -451,7 +451,7 @@ public class AntGameModelTest {
         Pos p = centre;
         Dir d = ZERO;
         Sense.SenseDir sd = HERE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(2,3);
         Pos result = instance.sensedCell(p, d, sd);
         assertFalse(expResult.equals(result));
@@ -466,7 +466,7 @@ public class AntGameModelTest {
         Pos p = centre;
         Dir d = ZERO;
         Sense.SenseDir sd = HERE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(2,2);
         Pos result = instance.sensedCell(p, d, sd);
         assertEquals(expResult, result);
@@ -481,7 +481,7 @@ public class AntGameModelTest {
         Pos p = centre;
         Dir d = ZERO;
         Sense.SenseDir sd = AHEAD;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(3,2);
         Pos result = instance.sensedCell(p, d, sd);
         assertEquals(expResult, result);
@@ -492,7 +492,7 @@ public class AntGameModelTest {
         Pos p = centre;
         Dir d = ZERO;
         Sense.SenseDir sd = LEFT_AHEAD;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(2,1);
         Pos result = instance.sensedCell(p, d, sd);
         assertEquals(expResult, result);
@@ -503,7 +503,7 @@ public class AntGameModelTest {
         Pos p = centre;
         Dir d = ZERO;
         Sense.SenseDir sd = RIGHT_AHEAD;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Pos expResult = new Pos(2,3);
         Pos result = instance.sensedCell(p, d, sd);
         assertEquals(expResult, result);
@@ -516,7 +516,7 @@ public class AntGameModelTest {
     public void testOtherColourRedReturnsBlack() {
         System.out.println("otherColour");
         Ant.Colour c = RED;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Ant.Colour expResult = BLACK;
         Ant.Colour result = instance.otherColour(c);
         assertEquals(expResult, result);
@@ -529,7 +529,7 @@ public class AntGameModelTest {
     public void testOtherColourBlackReturnsRed() {
         System.out.println("otherColour");
         Ant.Colour c = BLACK;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Ant.Colour expResult = RED;
         Ant.Colour result = instance.otherColour(c);
         assertEquals(expResult, result);
@@ -542,7 +542,7 @@ public class AntGameModelTest {
     public void testRockyFailsOnClearCell() {
         System.out.println("rocky");
         Pos p = centre;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.rocky(p);
         assertEquals(expResult, result);
@@ -555,7 +555,7 @@ public class AntGameModelTest {
     public void testRockyPassesOnEdge() {
         System.out.println("rocky");
         Pos p = new Pos(0,0);
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = true;
         boolean result = instance.rocky(p);
         assertEquals(expResult, result);
@@ -568,7 +568,7 @@ public class AntGameModelTest {
     public void testState() throws InvalidStateException {
         System.out.println("state");
         Ant a;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         a = instance.antAt(redAntPos);
         int expResult = 0;
@@ -587,7 +587,7 @@ public class AntGameModelTest {
     public void testColour() {
         System.out.println("colour");
         Ant a = new Ant(RED, 0, centre);
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Ant.Colour expResult = RED;
         Ant.Colour result = instance.colour(a);
         assertEquals(expResult, result);
@@ -600,7 +600,7 @@ public class AntGameModelTest {
     public void testResting() {
         System.out.println("resting");
         Ant a;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         a = instance.antAt(redAntPos);
         int expResult = 0;
@@ -619,7 +619,7 @@ public class AntGameModelTest {
     public void testDirection() {
         System.out.println("direction");
         Ant a;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         a = instance.antAt(redAntPos);
         Dir expResult = ZERO;
@@ -638,7 +638,7 @@ public class AntGameModelTest {
     public void testHasFood() {
         System.out.println("hasFood");
         Ant a = new Ant(RED, 0, centre);
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.hasFood(a);
         assertEquals(expResult, result);
@@ -652,7 +652,7 @@ public class AntGameModelTest {
         System.out.println("setState");
         Ant a = new Ant(RED, 0, centre);
         int state = 4;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         assertEquals(a.state(), 0);
         instance.setState(a, state);
         assertEquals(a.state(), 4);
@@ -666,7 +666,7 @@ public class AntGameModelTest {
         System.out.println("setResting");
         Ant a = new Ant(RED, 0, centre);
         int Resting = 9;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.setResting(a, Resting);
         assertEquals(a.resting(),Resting );
     }
@@ -679,7 +679,7 @@ public class AntGameModelTest {
         System.out.println("setDirection");
         Ant a = new Ant(RED, 0, centre);
         Dir d = ONE;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.setDirection(a, d);
         assertEquals(a.direction(), d);
     }
@@ -692,7 +692,7 @@ public class AntGameModelTest {
         System.out.println("setHasFood");
         Ant a = new Ant(RED, 0, centre);
         Boolean hasFood = true;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.setHasFood(a, hasFood);
         boolean expResult = true;
         boolean result = instance.hasFood(a);
@@ -707,7 +707,7 @@ public class AntGameModelTest {
         System.out.println("someAntIsAt");
         Ant a = new Ant(RED, 0, centre);
         Pos p = centre;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.setAntAt(p, a);
         boolean expResult = true;
         boolean result = instance.someAntIsAt(p);
@@ -722,7 +722,7 @@ public class AntGameModelTest {
         System.out.println("antAtSetAntAt");
         Ant a = new Ant(RED, 0, centre);
         Pos p = centre;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.setAntAt(p, a);
         Ant expResult = a;
         Ant result = instance.antAt(p);
@@ -737,7 +737,7 @@ public class AntGameModelTest {
         System.out.println("clearAntAt");
         Ant a = new Ant(RED, 0, centre);
         Pos p = centre;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.setAntAt(p, a);
         Ant expResult = a;
         Ant result = instance.antAt(p);
@@ -753,7 +753,7 @@ public class AntGameModelTest {
     public void testAntIsAlive() {
         System.out.println("antIsAlive");
         int id = 0;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.antIsAlive(id);
         assertEquals(expResult, result);
@@ -771,7 +771,7 @@ public class AntGameModelTest {
         System.out.println("findAnt");
         int id0 = 0;
         int id1 = 1;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         Pos expResult = blackAntPos;
         Pos result = instance.findAnt(id0);
@@ -789,7 +789,7 @@ public class AntGameModelTest {
         System.out.println("KillAntAt");
         Pos p = redAntPos;
         int id = 1;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = true;
         boolean result = instance.antIsAlive(id);
@@ -811,7 +811,7 @@ public class AntGameModelTest {
         Pos p = centre;
         Ant.Colour c = RED;
         Mark.Marker m = MARKER1;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.checkMarkerAt(p, c, m);
         assertEquals(expResult, result);
@@ -834,7 +834,7 @@ public class AntGameModelTest {
         Pos p = centre;
         Ant.Colour c = RED;
         Mark.Marker m = MARKER1;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.checkAnyMarkerAt(p, c);
         assertEquals(expResult, result);
@@ -855,7 +855,7 @@ public class AntGameModelTest {
     public void testSetFoodAtFoodAt() {
         System.out.println("foodAt");
         Pos p = centre;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         int expResult = 0;
         int result = instance.foodAt(p);
         assertEquals(expResult, result);
@@ -875,7 +875,7 @@ public class AntGameModelTest {
         Pos notHill = centre;
         Pos isHill = redAntPos;
         Ant.Colour c = RED;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.antHillAt(notHill, c);
         assertEquals(expResult, result);
@@ -893,7 +893,7 @@ public class AntGameModelTest {
         Pos p = redAntPos;
         Ant.Colour c = RED;
         Condition cond = new Friend();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = true;
         boolean result = instance.cellMatches(p, c, cond);
@@ -909,7 +909,7 @@ public class AntGameModelTest {
         Pos p = blackAntPos;
         Ant.Colour c = BLACK;
         Condition cond = new Friend();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = true;
         boolean result = instance.cellMatches(p, c, cond);
@@ -925,7 +925,7 @@ public class AntGameModelTest {
         Pos p = redAntPos;
         Ant.Colour c = BLACK;
         Condition cond = new Friend();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = false;
         boolean result = instance.cellMatches(p, c, cond);
@@ -941,7 +941,7 @@ public class AntGameModelTest {
         Pos p = blackAntPos;
         Ant.Colour c = RED;
         Condition cond = new Friend();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = false;
         boolean result = instance.cellMatches(p, c, cond);
@@ -957,7 +957,7 @@ public class AntGameModelTest {
         Pos p = blackAntPos;
         Ant.Colour c = RED;
         Condition cond = new Foe();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = true;
         boolean result = instance.cellMatches(p, c, cond);
@@ -973,7 +973,7 @@ public class AntGameModelTest {
         Pos p = redAntPos;
         Ant.Colour c = RED;
         Condition cond = new Foe();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = false;
         boolean result = instance.cellMatches(p, c, cond);
@@ -988,7 +988,7 @@ public class AntGameModelTest {
         Pos p = redAntPos;
         Ant.Colour c = BLACK;
         Condition cond = new Foe();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = true;
         boolean result = instance.cellMatches(p, c, cond);
@@ -1004,7 +1004,7 @@ public class AntGameModelTest {
         Pos p = blackAntPos;
         Ant.Colour c = BLACK;
         Condition cond = new Foe();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = false;
         boolean result = instance.cellMatches(p, c, cond);
@@ -1020,7 +1020,7 @@ public class AntGameModelTest {
         Pos p = blackAntPos;
         Ant.Colour c = BLACK;
         Condition cond = new FriendWithFood();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = false;
         boolean result = instance.cellMatches(p, c, cond);
@@ -1059,7 +1059,7 @@ public class AntGameModelTest {
         Pos p = blackAntPos;
         Ant.Colour c = BLACK;
         Condition cond = new FoeWithFood();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         instance.populateAntHills();
         boolean expResult = false;
         boolean result = instance.cellMatches(p, c, cond);
@@ -1098,7 +1098,7 @@ public class AntGameModelTest {
         Pos p = centre;
         Ant.Colour c = BLACK;
         Condition cond = new Food();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.cellMatches(p, c, cond);
         assertEquals(expResult, result);
@@ -1118,7 +1118,7 @@ public class AntGameModelTest {
         Pos p = centre;
         Ant.Colour c = BLACK;
         Condition cond = new Rock();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.cellMatches(p, c, cond);
         assertEquals(expResult, result);
@@ -1137,7 +1137,7 @@ public class AntGameModelTest {
         Pos p = centre;
         Ant.Colour c = BLACK;
         Condition cond = MARKER1;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.cellMatches(p, c, cond);
         assertEquals(expResult, result);
@@ -1169,7 +1169,7 @@ public class AntGameModelTest {
         Ant.Colour foe = BLACK;
         Ant.Colour friend = RED;
         Condition cond = new FoeMarker();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.cellMatches(p, foe, cond);
         assertEquals(expResult, result);
@@ -1192,7 +1192,7 @@ public class AntGameModelTest {
         Pos p = blackAntPos;
         Ant.Colour c = BLACK;
         Condition cond = new Home();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = true;
         boolean result = instance.cellMatches(p, c, cond);
         assertEquals(expResult, result);
@@ -1219,7 +1219,7 @@ public class AntGameModelTest {
         Pos p = blackAntPos;
         Ant.Colour c = BLACK;
         Condition cond = new FoeHome();
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         boolean expResult = false;
         boolean result = instance.cellMatches(p, c, cond);
         assertEquals(expResult, result);
@@ -1245,7 +1245,7 @@ public class AntGameModelTest {
         System.out.println("getInstruction");
         Ant.Colour c = RED;
         int state = 0;
-        AntGameModel instance = new AntGameModel(testMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMap, brain, brain);
         Instruction result = instance.getInstruction(c, state);
         assertTrue(result instanceof Sense);
         state = 1;
@@ -1264,7 +1264,7 @@ public class AntGameModelTest {
         System.out.println("adjacentAnts");
         Pos p = centre;
         Ant.Colour c = BLACK;
-        AntGameModel instance = new AntGameModel(testMapSurround, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMapSurround, brain, brain);
         instance.populateAntHills();
         int expResult = 6;
         int result = instance.adjacentAnts(p, c);
@@ -1296,7 +1296,7 @@ public class AntGameModelTest {
         System.out.println("checkForSurroundedAntAt");
         Pos p = centre;
         Ant.Colour c = BLACK;
-        AntGameModel instance = new AntGameModel(testMapSurround, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMapSurround, brain, brain);
         instance.populateAntHills();
         assertTrue(instance.someAntIsAt(p));
         int id = instance.antAt(p).getID();
@@ -1314,7 +1314,7 @@ public class AntGameModelTest {
         System.out.println("checkForSurroundedAnts");
         Pos p = new Pos(3,2);
         Ant.Colour c = BLACK;
-        AntGameModel instance = new AntGameModel(testMapSurround, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), testMapSurround, brain, brain);
         instance.populateAntHills();
         assertTrue(instance.someAntIsAt(centre));
         int id = instance.antAt(centre).getID();
@@ -1338,7 +1338,7 @@ public class AntGameModelTest {
         BrainParser bpr = new BrainParser();
         String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
         brain = bpr.parseBrain(brainStringArray);
-        AntGameModel instance = new AntGameModel(cellMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), cellMap, brain, brain);
         instance.populateAntHills();
         instance.playGame(1000, true);
         String[] expResult = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\testDump\\dump0-1000.0-1000");
@@ -1361,7 +1361,7 @@ public class AntGameModelTest {
         BrainParserRob bpr = new BrainParserRob();
         String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
         brain = bpr.parseBrain(brainStringArray);
-        AntGameModel instance = new AntGameModel(cellMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), cellMap, brain, brain);
         instance.populateAntHills();
         instance.playGame(10000, false);
         String[] expResult = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\testDump\\dumpall");
@@ -1384,7 +1384,7 @@ public class AntGameModelTest {
         BrainParserRob bpr = new BrainParserRob();
         String[] brainStringArray = Utils.fileToStringArray("C:\\Users\\owner\\Documents\\NetBeansProjects\\Software-Engineering-Source-Code\\AntGame\\src\\test\\java\\tinyWorldSimTest\\sample.ant");
         brain = bpr.parseBrain(brainStringArray);
-        AntGameModel instance = new AntGameModel(cellMap, brain, brain);
+        AntGameModel instance = new AntGameModel(new AntGameController(), cellMap, brain, brain);
         instance.populateAntHills();
         instance.playGame(300000);
     }
